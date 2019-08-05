@@ -38,7 +38,7 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
             
-            <a class="navbar-brand" href="/shopping/controller/PageController.php/index">商城首頁</a>
+            <a class="navbar-brand" href="/shopping/controller/userController.php/index">商城首頁</a>
             </div>
         
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -51,8 +51,8 @@
                 <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
                 {{/if}}
                 {{if $permission == 5}}
-                <li class=""><a href="/shopping/controller/ManagerPageController.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
-                <li><a href="/shopping/controller/managerPageController.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
+                <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
+                <li><a href="/shopping/controller/managercontroller.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
                 {{/if}}
                 
                 

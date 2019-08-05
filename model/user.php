@@ -48,5 +48,18 @@
             );
             return $user_list;
         }
+
+        public function updatePermission($user_id, $permission)
+        {
+            $is_success = $this->update(
+                $this->table,
+                ['permission'],
+                [$permission],
+                ['user_id'],
+                [$user_id],
+                'ii'
+            );
+            return $is_success;
+        }
     }
     

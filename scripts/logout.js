@@ -2,7 +2,7 @@ logout();
 
 function logout() {
     $.ajax({
-        type : 'post',
+        type : 'DELETE',
         url : '/shopping/controller/UserController.php/logout',
         data : {action:'logout'},
         success : function(result_array) {

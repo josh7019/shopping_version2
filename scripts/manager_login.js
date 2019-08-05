@@ -44,7 +44,7 @@ function login()
     }
     $.ajax({
         type : 'post',
-        url : '../controller/ManagerController.php',
+        url : '../controller/ManagerController.php/login',
         data : data,
         success : function (result_array) {
             console.log(result_array);

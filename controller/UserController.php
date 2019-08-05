@@ -120,15 +120,27 @@
                 if (password_verify($password, $user_item['password'])) {
                     $token = produceToken();
                     $user->addToken($account, $token);
-                    setcookie('token', $token, time()+3600 ,'/');
+                    setcookie('token', $token, time() + 3600 ,'/');
+                    ##檢查購物車
+                    $order_menu = new OrderMenu;
+                    $order_menu_item = $order_menu->getLastListByUserId($user_item['user_id']);
+                    if (isset($order_menu_item['user_id'])) {
+                        setcookie('order_menu_id', $order_menu_item['order_menu_id'], time() + 3600 , '/');
+                    } else {
+                        $is_success = $order_menu->addList($user_item['user_id']);
+                        if($is_success){
+                            $order_menu_item = $order_menu->getLastListByUserId($user_item['user_id']);
+                            setcookie('order_menu_id', $order_menu_item['order_menu_id'], time() + 3600 , '/');
+                        }
+                    }
                     $data=[
                         'alert' => '登入成功',
-                        'location' => '/shopping/controller/PageController.php/index',
+                        'location' => '/shopping/controller/userController.php/index',
                     ];
                     echo json_encode($data);
                     exit();
                 } else {
-                    $data=[
+                    $data = [
                         'alert' => '密碼錯誤',
                     ];
                     echo json_encode($data);
@@ -140,12 +152,19 @@
         /*
          * 登出
          */
-        public function POST_logout()
+        public function GET_logout()
+        {
+            $smarty = new Smarty;
+            $smarty->display('../views/logout.html');
+        }
+
+        public function DELETE_logout()
         {
             setcookie ("token", "test", time()-100, '/');
-            $data=[
+            setcookie ("order_menu_id", "test", time()-100, '/');
+            $data = [
                 'alert' => '登出成功',
-                'location' => '/shopping/controller/PageController.php/index',
+                'location' => '/shopping/controller/userController.php/index',
             ];
             echo json_encode($data);
             exit();

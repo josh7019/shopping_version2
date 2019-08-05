@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-02 10:58:44
+/* Smarty version 3.1.33, created on 2019-08-05 09:13:42
   from 'C:\xampp\htdocs\shopping\views\login.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d43fb443956d2_24838850',
+  'unifunc' => 'content_5d47d726549cd6_89015192',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5357c5c0575fa1759eb5742d137a1e2baa296255' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\login.html',
-      1 => 1564736277,
+      1 => 1564989199,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d43fb443956d2_24838850 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d47d726549cd6_89015192 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,14 +75,14 @@ function content_5d43fb443956d2_24838850 (Smarty_Internal_Template $_smarty_tpl)
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                 
-                <a class="navbar-brand" href="/shopping/controller/PageController.php/index">商城首頁</a>
+                <a class="navbar-brand" href="/shopping/controller/usercontroller.php/index">商城首頁</a>
                 </div>
             
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class=""><a href="/shopping/controller/PageController.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/shopping/controller/PageController.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
+                    <li class=""><a href="/shopping/controller/usercontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -104,7 +104,7 @@ function content_5d43fb443956d2_24838850 (Smarty_Internal_Template $_smarty_tpl)
                             </div>
                             <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
-                    <li><a href="/shopping/controller/PageController.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
                     <li class="dropdown">
                     </li>
@@ -142,17 +142,13 @@ function content_5d43fb443956d2_24838850 (Smarty_Internal_Template $_smarty_tpl)
                 <label class="col-md-4 control-label" for="signin"></label>
                 <div class="col-md-4">
                     <button id='login_button' type='button' id="signin" name="signin" class="btn btn-info">登入</button>
-                    <a href="/shopping/controller/PageController.php/signup" class='btn btn-success'>註冊</a>
+                    <a href="/shopping/controller/usercontroller.php/signup" class='btn btn-success'>註冊</a>
                 </div>
             </div>
             </fieldset>
             </form>
         </div>
-        <input type="hidden" id='message' value='<?php ob_start();
-echo $_smarty_tpl->tpl_vars['message']->value;
-$_prefixVariable1 = ob_get_clean();
-echo $_prefixVariable1;?>
-'>
+        <input type="hidden" id='message' value=''>
     
         <?php echo '<script'; ?>
  

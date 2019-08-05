@@ -7,7 +7,8 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script type="text/javascript" src=''></script>
+        <script type="text/javascript" src='/shopping/scripts/functions.js'></script>
+        <script type="text/javascript" src='/shopping/scripts/maneger_member.js'></script>
         <title>Document</title>
         <style>
             .table-striped>thead>tr{
@@ -40,21 +41,21 @@
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                 
-                <a class="navbar-brand" href="/shopping/controller/PageController.php/index">商城首頁</a>
+                <a class="navbar-brand" href="/shopping/controller/userController.php/index">商城首頁</a>
                 </div>
             
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     {{if $is_login}}
-                    <li class=""><a href="/shopping/controller/PageController.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/shopping/controller/PageController.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
+                    <li class=""><a href="/shopping/controller/userController.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/shopping/controller/userController.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
                     {{else}}
-                    <li><a href="/shopping/controller/PageController.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
+                    <li><a href="/shopping/controller/userController.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
                     {{/if}}
                     {{if $permission == 5}}
-                    <li class=""><a href="/shopping/controller/managerPageController.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/shopping/controller/managerPageController.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
+                    <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/shopping/controller/managercontroller.php/product"><span class="glyphicon glyphicon-list-alt"></span> 產品管理 </a></li>
                     {{/if}}
                     
                     
@@ -79,8 +80,8 @@
                             </div>
                             <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
-                    <li><a href="/shopping/controller/PageController.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
-                    <li><a href="/shopping/controller/PageController.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
+                    <li><a href="/shopping/controller/userController.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
+                    <li><a href="/shopping/controller/userController.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
                     <li class="dropdown"></li>
                 </ul>
                 </div><!-- /.navbar-collapse -->
@@ -91,7 +92,7 @@
         <div class='container'>
             <div id="nowTime"></div>
             <div>
-                <!-- 留言新增表格 -->
+                <!-- 會員新增表格 -->
                 <div id='addTodoList'>
                     <form id='add_message_form' class="form-horizontal" method='POST' action='/shopping/cont/addmessage.php'>
                         <fieldset>
@@ -99,9 +100,9 @@
                             <legend style="color: red;">會員管理</legend>
                         </fieldset>
                     </form>
-                </div><!-- 留言新增表格結束 -->
+                </div><!-- 會員新增表格結束 -->
                 
-                <!-- 留言顯示區 -->
+                <!-- 會員顯示區 -->
                 <table class="table table-striped" id='showTodoList'>
                     <thead>
                         <tr>
@@ -117,56 +118,40 @@
                     </thead>
                     <tbody id='messageArea'>
                         {{foreach $user_list as $user_item}}
-                        <tr class="item-color-1">
-                            <td>{{$user_item['user_id']}}</td>
-                            <td>{{$user_item['account']}}</td>
-                            <td>{{$user_item['name']}}</td>
-                            <td>正常</td>
-                            <td>{{$user_item['cash']}}</td>
-                            <td>{{$user_item['created_at']}}</td>
-                            <td>1000</td>
-                            <td>
-                                <span class="pull-right">
-                                    <span class="btn btn-warning">
-                                        <span class="glyphicon glyphicon-pencil">
+                            {{if $user_item['permission'] < 2}}
+                            <tr class="item-color-1">
+                                <td>{{$user_item['user_id']}}</td>
+                                <td>{{$user_item['account']}}</td>
+                                <td>{{$user_item['name']}}</td>
+                                <td>
+                                    <select name="status" id="status">
+                                        <option value="0" {{if $user_item['permission'] == 0}}selected{{/if}}>正常</option>
+                                        <option value="1" {{if $user_item['permission'] == 1}}selected{{/if}}>凍結中</option>
+                                    </select>
+                                </td>
+                                <td>{{$user_item['cash']}}</td>
+                                <td>{{$user_item['created_at']}}</td>
+                                <td>1000</td>
+                                <td>
+                                    <span class="pull-right update_button">
+                                        <span class="btn btn-warning">
+                                            <span class="glyphicon glyphicon-pencil">
+                                            </span>
+                                            確認修改
                                         </span>
-                                        編輯
+                                        <!-- <span class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-remove">
+                                            </span>
+                                            刪除
+                                        </span> -->
                                     </span>
-                                    <span class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-remove">
-                                        </span>
-                                        刪除
-                                    </span>
-                                </span>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                            {{/if}}
                         {{/foreach}}
 
-                        <!-- <tr class="item-color-2">
-                            <td>0</td>
-                            <td>test</td>
-                            <td>josh</td>
-                            <td>正常</td>
-                            <td>50</td>
-                            <td>2019-07-29</td>
-                            <td>1000</td>
-                            <td>
-                                <span class="pull-right">
-                                    <span class="btn btn-warning">
-                                        <span class="glyphicon glyphicon-pencil">
-                                        </span>
-                                        編輯
-                                    </span>
-                                    <span class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-remove">
-                                        </span>
-                                        刪除
-                                    </span>
-                                </span>
-                            </td>
-                        </tr> -->
                     </tbody>
-                </table><!-- 留言顯示區結束 -->
+                </table><!-- 會員顯示區結束 -->
             </div>
         </div>
         <input type="hidden" id='message' value=''>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,12 +8,12 @@
         integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="text/javascript" src='/shopping/scripts/functions.js'></script>
-        <script type="text/javascript" src='/shopping/scripts/manager_login.js'></script>
+        <script type="text/javascript" src='/shopping/scripts/manager_edit_product.js'></script>
+        
         <title>Document</title>
         <style>
-            .myform {
+            .myform{
                 margin-top:20%;
-                color: red;
                 width:50%;
                 margin-left:25%;
                 text-align:center;
@@ -22,24 +21,22 @@
             }
             body {
             font-family: arial,"Microsoft JhengHei","微軟正黑體",sans-serif !important;
-            color:#a6a6a6;
             background-color:#1c1c1c; 
-        }
-            th {
-                text-align: center;
-            }
-            tr {
-                text-align: center;
             }
             #title {
-                color: red;
+                color:red;
             }
-            #login_form {
+            #edit_product {
                 background-color: #262626
             }
+            .descript {
+                color:red;
+            }
+            
         </style>
     </head>
     <body>
+        
         <!-- 導覽列 -->
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -93,48 +90,81 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-        <!-- 導覽列結束 -->
-
         
-        <div class='container'>
-            
-            <form id='login_form' class="form-horizontal myform" >
+        <div class='container'>        
+            <form id='edit_product' class="form-horizontal myform">
             <fieldset>
+
             <!-- Form Name -->
-            <legend id='title'>管理者登入</legend>
-            <!-- Text input-->
+            <legend class='descript'>修改產品</legend>
+
+            <input type="hidden" name='product_id' value="{{$product_item['product_id']}}">
+
+            <!-- 名稱輸入 -->
             <div class="form-group">
-                <label class="col-md-4 control-label" for="Account">帳號</label>  
+                <label class="col-md-4 control-label descript"  for="name">產品名稱</label><span class='descript' id='name_signal'></span>
                 <div class="col-md-4">
-                    <input id="account" name="account" type="text" placeholder="請輸入帳號" class="form-control input-md" required>
+                    <input id="name" value = "{{$product_item['name']}}" autocomplete='off' name="name" type="text" placeholder="請輸入產品名稱" class="form-control input-md" required="">
+                    <span class="help-block"></span> 
                 </div>
             </div>
 
-            <!-- Text input-->
+            <!-- 價格輸入-->
             <div class="form-group">
-                <label class="col-md-4 control-label" for="password">密碼</label>  
+                <label class="col-md-4 control-label descript" for="price">價格</label><span class='descript' id='price_signal'></span>  
                 <div class="col-md-4">
-                    <input id="password" name="password" type="password" placeholder="請輸入密碼" class="form-control input-md" required>
+                    <input id="price" value="{{$product_item['price']}}" name="price" type="number" min="1" placeholder="請輸入價格" class="form-control input-md" required="">
+                    <span class="help-block"></span> 
                 </div>
             </div>
 
-            <!-- Button -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="signin"></label>
+            <!-- 商品狀態選擇-->
+            <div class="form-group descript">
+                <label class="col-md-4 control-label" for="status">商品狀態</label><span id='status_signal'></span>
                 <div class="col-md-4">
-                    <button id='login_button' type='button' id="signin" name="signin" class="btn btn-info">登入</button>
-                    <a href="/shopping/controller/userController.php/signup" class='btn btn-success'>註冊</a>
+                    <select name="status" id="status">
+                        <option value="0" {{if $product_item['status'] == 0}}selected{{/if}}>待上架</option>
+                        <option value="1" {{if $product_item['status'] == 1}}selected{{/if}}>售賣中</option>
+                    </select>
                 </div>
             </div>
+
+            <!-- 產品描述輸入-->
+            <div class="form-group">
+                    <label class="col-md-4 control-label descript" for="descript">產品描述</label><span class='descript' id='descript_signal'></span>
+                    <div class="col-md-4">
+                        <textarea name="descript" id="descript" cols="30" rows="5">{{$product_item['descript']}}</textarea>
+                    </div>
+            </div>
+            
+            <!-- 上傳圖片 -->
+            <div class="form-group descript">
+                <label class="col-md-4 control-label" for="image">變更圖片</label>
+                <div class="col-md-4">
+                    <input type="file" name='image'>
+                </div>
+            </div>
+
+            <!-- 送出按鈕 -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="login"></label>
+                <div class="col-md-4">
+                    <button type='button' id="edit_button" name="edit_button" class="btn btn-success">確定修改</button>
+                </div>
+            </div>
+
+            <input type="hidden" name='action' value='editProduct'>
+            
             </fieldset>
             </form>
         </div>
-        <input type="hidden" id='message' value='{{$message}}'>
-    
+        
+        
         <script 
         src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" 
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" 
         crossorigin="anonymous">
-    </script>
+        </script>
+        <!-- 清除message -->
     </body>
 </html>

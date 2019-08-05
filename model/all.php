@@ -3,6 +3,8 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/manager.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/tools/CheckTool.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/Product.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/OrderDetail.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/OrderMenu.php');
     
     /*
      * 產生token
@@ -63,14 +65,15 @@
                     //存放位置及檔名
                     $file_type = (preg_match('/.jpg$/', $files['name'])) ? ".jpg" : ".png";
                     $filename = 'product_id=' . $product_item['product_id'] . $file_type;
-                    $filepath = "../img/" . $filename;
+                    $filepath = $_SERVER['DOCUMENT_ROOT']."/shopping/img/" . $filename;
                     //檢查目錄是否存在
                     if (!file_exists($filepath)) {
                         $is_upload=move_uploaded_file($files["tmp_name"], $filepath);//存放檔案
                         $product->updateImage($product_item['product_id'], $filename);
                         $data = [
                             'alert' => '新增產品及圖片成功',
-                            'location' => '/shopping/controller/managerpagecontroller.php/product'
+                            'location' => '/shopping/controller/managercontroller.php/product',
+                            'is_success' => true,
                         ];
                         echo json_encode($data);
                         exit();
@@ -78,8 +81,9 @@
                         $is_upload=move_uploaded_file($files["tmp_name"], $filepath);//存放檔案
                         $product->updateImage($product_item['product_id'], $filename);
                         $data = [
-                            'alert' => '修改圖片成功',
-                            'location' => '/shopping/controller/managerpagecontroller.php/product'
+                            'alert' => '修改產品及圖片成功',
+                            'location' => '/shopping/controller/managercontroller.php/product',
+                            'is_success' => true,
                         ];
                         echo json_encode($data);
                         exit();

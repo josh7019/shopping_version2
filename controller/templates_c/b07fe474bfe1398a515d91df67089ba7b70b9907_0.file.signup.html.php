@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-02 11:48:26
+/* Smarty version 3.1.33, created on 2019-08-05 09:14:41
   from 'C:\xampp\htdocs\shopping\views\signup.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4406ea0a2935_96161436',
+  'unifunc' => 'content_5d47d7615c9be1_43022071',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'b07fe474bfe1398a515d91df67089ba7b70b9907' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\signup.html',
-      1 => 1564736265,
+      1 => 1564989279,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4406ea0a2935_96161436 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d47d7615c9be1_43022071 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -66,14 +66,14 @@ function content_5d4406ea0a2935_96161436 (Smarty_Internal_Template $_smarty_tpl)
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                 
-                <a class="navbar-brand" href="/shopping/controller/PageController.php/index">商城首頁</a>
+                <a class="navbar-brand" href="/shopping/controller/usercontroller.php/index">商城首頁</a>
                 </div>
             
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class=""><a href="/shopping/controller/PageController.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/shopping/controller/PageController.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
+                    <li class=""><a href="/shopping/controller/usercontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -95,6 +95,7 @@ function content_5d4406ea0a2935_96161436 (Smarty_Internal_Template $_smarty_tpl)
                             </div>
                             <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
+                    <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
                     <li class="dropdown">
                     </li>
@@ -155,11 +156,7 @@ function content_5d4406ea0a2935_96161436 (Smarty_Internal_Template $_smarty_tpl)
             </fieldset>
             </form>
         </div>
-        <input type="hidden" id='message' value='<?php ob_start();
-echo $_smarty_tpl->tpl_vars['message']->value;
-$_prefixVariable1 = ob_get_clean();
-echo $_prefixVariable1;?>
-'>
+        <input type="hidden" id='message' value=''>
         
         <?php echo '<script'; ?>
  type="text/javascript" src='/shopping/scripts/signup.js'><?php echo '</script'; ?>

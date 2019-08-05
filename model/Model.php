@@ -24,7 +24,7 @@
                 $select_string .= $select_single.',';
             }
 
-            $select_string = substr($select_string, 0, strlen($select_string)-1);
+            $select_string = substr($select_string, 0, strlen($select_string) - 1);
             $sql = "select {$select_string} from {$table}";
             $pre = $this->mysqli->prepare($sql);
             $pre->execute();
@@ -41,7 +41,7 @@
         }
 
         /*
-         * 取得全部資料
+         * 取得最後一筆資料
          */
         public function selectLastOne($table, $select_list, $order_by_colum){
             $select_string = '';
@@ -49,7 +49,7 @@
                 $select_string .= $select_single.',';
             }
 
-            $select_string = substr($select_string, 0, strlen($select_string)-1);
+            $select_string = substr($select_string, 0, strlen($select_string) - 1);
             $sql = "select {$select_string} from {$table} order by {$order_by_colum} desc limit 1";
             $pre = $this->mysqli->prepare($sql);
             $pre->execute();
@@ -59,7 +59,51 @@
                     foreach ($row as $key => $value) {
                         $resultItem[$key] = $value;
                     }
-                    $resultItem;
+            return $resultItem;
+        }
+
+        /*
+         * 使用where取得最後一筆資料
+         */
+        public function selectLastOneWithWhere(
+            $table,
+            $select_list,
+            $where_colum_list,
+            $where_value_list,
+            $type_string,
+            $order_by_colum
+        ) {
+            $select_string = '';
+            $where_colum_string = '';
+            $where_value_string = '';
+            foreach ($select_list as $select_single) {
+                $select_string .= $select_single.',';
+            }
+            ## 組成where字串
+            foreach ($where_colum_list as $where_colum) {
+                $where_colum_string .= $where_colum.',';
+            }
+            foreach ($where_value_list as $where_value) {
+                $where_value_string .= '?,';
+            }
+            ## 去逗號
+            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string) - 1);
+            $where_value_string = substr($where_value_string, 0, strlen($where_value_string) - 1);
+            $select_string = substr($select_string, 0, strlen($select_string) - 1);
+            $sql = "select {$select_string}
+                    from {$table}
+                    where ({$where_colum_string}) = ({$where_value_string})
+                    order by {$order_by_colum} desc limit 1";
+            $pre = $this->mysqli->prepare($sql);
+            $pre->bind_param($type_string,...$where_value_list);
+            $pre->execute();
+            $result = $pre->get_result();
+            $row = $result->fetch_assoc();
+            $resultItem = [];
+            if (!$row) {return [];}
+            foreach ($row as $key => $value) {
+                $resultItem[$key] = $value;
+            }
             return $resultItem;
         }
 
@@ -83,12 +127,13 @@
                 $where_value_string .= '?,';
             }
             ## 去逗號
-            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string)-1);
-            $where_value_string = substr($where_value_string, 0, strlen($where_value_string)-1);
-            $select_string = substr($select_string, 0, strlen($select_string)-1);
+            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string) - 1);
+            $where_value_string = substr($where_value_string, 0, strlen($where_value_string) - 1);
+            $select_string = substr($select_string, 0, strlen($select_string) - 1);
             ## 組成sql語法
-            $sql = "select $select_string from $table 
-            where ({$where_colum_string})  =  ($where_value_string)";
+            $sql = "select $select_string 
+                    from $table 
+                    where ({$where_colum_string}) = ($where_value_string)";
             $pre = $this->mysqli->prepare($sql);
             $pre->bind_param($type_string,...$where_value_list);
             $pre->execute();
@@ -124,8 +169,8 @@
                 $where_value_string .= '?,';
             }
             ## 去逗號
-            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string)-1);
-            $where_value_string = substr($where_value_string, 0, strlen($where_value_string)-1);
+            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string) - 1);
+            $where_value_string = substr($where_value_string, 0, strlen($where_value_string) - 1);
             $select_string = substr($select_string, 0, strlen($select_string) - 1);
             ## 組成sql語法
             $sql = "select $select_string from $table 
@@ -155,13 +200,13 @@
                 foreach ($insert_colum_list as $insert_colum) {
                     $insert_colum_string .= $insert_colum.',';
                 }
-                $insert_colum_string = substr($insert_colum_string, 0, strlen($insert_colum_string)-1);
+                $insert_colum_string = substr($insert_colum_string, 0, strlen($insert_colum_string) - 1);
                 
                 foreach ($insert_value_list as $insert_value) {
                     $insert_value_string .= '?,';
                 }
             ## 去掉尾端逗號
-            $insert_value_string = substr($insert_value_string, 0, strlen($insert_value_string)-1);
+            $insert_value_string = substr($insert_value_string, 0, strlen($insert_value_string) - 1);
             $sql = "insert into {$table} ({$insert_colum_string}) values ({$insert_value_string})";
             $pre = $this->mysqli->prepare($sql);
             $pre->bind_param($type_string, ...$insert_value_list);
@@ -184,8 +229,8 @@
                     $where_value_string .= '?,';
                 }
             ## 去逗號
-            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string)-1);
-            $where_value_string = substr($where_value_string, 0, strlen($where_value_string)-1);
+            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string) - 1);
+            $where_value_string = substr($where_value_string, 0, strlen($where_value_string) - 1);
             $sql = "delete from $table where ($where_colum_string)  =  ($where_value_string)";
             $pre = $this->mysqli->prepare($sql);
             $pre->bind_param($type_string, ...$where_value_list);
@@ -220,9 +265,9 @@
                     $where_value_string .= '?,';
                 }
             ## 去逗號
-            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string)-1);
-            $where_value_string = substr($where_value_string, 0, strlen($where_value_string)-1);
-            $set_colum_string = substr($set_colum_string, 0, strlen($set_colum_string)-1);
+            $where_colum_string = substr($where_colum_string, 0, strlen($where_colum_string) - 1);
+            $where_value_string = substr($where_value_string, 0, strlen($where_value_string) - 1);
+            $set_colum_string = substr($set_colum_string, 0, strlen($set_colum_string) - 1);
             $sql = "update $table set $set_colum_string where ($where_colum_string)  =  ($where_value_string)";
             $pre = $this->mysqli->prepare($sql);
             $pre->bind_param($type_string, ...$set_value_list, ...$where_value_list);
@@ -231,3 +276,13 @@
         }
 
     }
+
+    // $model = new model;
+    // $model->selectLastOneWithWhere(
+    //     'order_menu',
+    //     ['*'],
+    //     ['user_id', 'is_checkout'],
+    //     [10, 0],
+    //     'ii',
+    //     'order_menu_id'
+    // );

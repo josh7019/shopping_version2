@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-02 03:12:33
+/* Smarty version 3.1.33, created on 2019-08-05 09:04:47
   from 'C:\xampp\htdocs\shopping\views\shopping_car.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d438e0102c738_33512789',
+  'unifunc' => 'content_5d47d50f4a7914_63060685',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '98e6d6ef45b21254faf8fc54deb7ed7fbea8726f' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\shopping_car.html',
-      1 => 1564708335,
+      1 => 1564988686,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d438e0102c738_33512789 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d47d50f4a7914_63060685 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +35,6 @@ function content_5d438e0102c738_33512789 (Smarty_Internal_Template $_smarty_tpl)
     <style>
         .table-striped>thead>tr{
             background-color: #27ae60;
-            border: solid;
             color: white;
             text-align:center
             }
@@ -72,7 +71,7 @@ function content_5d438e0102c738_33512789 (Smarty_Internal_Template $_smarty_tpl)
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                 
-                <a class="navbar-brand" href="PageController.php?action=index">商城首頁</a>
+                <a class="navbar-brand" href="/shopping/controller/usercontroller.php/index">商城首頁</a>
                 </div>
             
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -83,14 +82,14 @@ if ($_smarty_tpl->tpl_vars['is_login']->value) {
 $_prefixVariable1 = ob_get_clean();
 echo $_prefixVariable1;?>
 
-                    <li class=""><a href="PageController.php?action=login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="PageController.php?action=signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
+                    <li class=""><a href="/shopping/controller/usercontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
                     <?php ob_start();
 } else {
 $_prefixVariable2 = ob_get_clean();
 echo $_prefixVariable2;?>
 
-                    <li><a href="PageController.php?action=logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
                     <?php ob_start();
 }
 $_prefixVariable3 = ob_get_clean();
@@ -117,8 +116,8 @@ echo $_prefixVariable3;?>
                         </div>
                         <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
-                    <li><a href="PageController.php?action=shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
-                    <li><a href="PageController.php?action=shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
                     <li class="dropdown"></li>
                 </ul>
                 </div><!-- /.navbar-collapse -->
@@ -130,7 +129,7 @@ echo $_prefixVariable3;?>
             <div id="nowTime"></div>
             <div>
                     <legend>購物車</legend>
-                <!-- 留言顯示區 -->
+                <!-- 會員顯示區 -->
                 <table class="table table-striped" id='title'>
                     <thead>
                         <tr>
@@ -144,7 +143,7 @@ echo $_prefixVariable3;?>
                     </thead>
                     <tbody id='itemArea'>
                         <tr class="item-color-1">
-                            <td><img src="../img/img1.jpg" alt=""></td>
+                            <td><img src="/shopping/img/product_id=1.jpg" alt=""></td>
                             <td>玩具總動員</td>
                             <td>只是玩具</td>
                             <td>NT500</td>
@@ -168,7 +167,7 @@ echo $_prefixVariable3;?>
                                 <td>0</td>
                                 <td>josh</td>
                                 <td>售賣中</td>
-                                <td>2019-07-29</td>
+                                <td>NT1000</td>
                                 <td><input type='number' value='20' min='1' style="width:50px"></td>
                                 <td >
                                     <span class="pull-right">
@@ -186,7 +185,7 @@ echo $_prefixVariable3;?>
                                 </td>
                             </tr>
                     </tbody>
-                </table><!-- 留言顯示區結束 -->
+                </table><!-- 會員顯示區結束 -->
             </div>
         </div>
         <input type="hidden" id='message' value='<?php ob_start();

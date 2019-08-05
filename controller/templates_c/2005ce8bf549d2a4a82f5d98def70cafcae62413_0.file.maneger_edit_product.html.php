@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-05 14:08:22
-  from 'C:\xampp\htdocs\shopping\views\manager_product.html' */
+/* Smarty version 3.1.33, created on 2019-08-05 12:27:45
+  from 'C:\xampp\htdocs\shopping\views\maneger_edit_product.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d47c7d6c07153_63726239',
+  'unifunc' => 'content_5d47b041e4b043_42252727',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '715e4840d826b58454bd968349ab543be0b2d37a' => 
+    '2005ce8bf549d2a4a82f5d98def70cafcae62413' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_product.html',
-      1 => 1564983905,
+      0 => 'C:\\xampp\\htdocs\\shopping\\views\\maneger_edit_product.html',
+      1 => 1564979260,
       2 => 'file',
     ),
   ),
@@ -20,15 +20,15 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d47c7d6c07153_63726239 (Smarty_Internal_Template $_smarty_tpl) {
-?>
-<!DOCTYPE html>
-<html lang="zh-tw">
+function content_5d47b041e4b043_42252727 (Smarty_Internal_Template $_smarty_tpl) {
+?><!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" 
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         <?php echo '<script'; ?>
  src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"><?php echo '</script'; ?>
 >
@@ -36,36 +36,36 @@ function content_5d47c7d6c07153_63726239 (Smarty_Internal_Template $_smarty_tpl)
  type="text/javascript" src='/shopping/scripts/functions.js'><?php echo '</script'; ?>
 >
         <?php echo '<script'; ?>
- type="text/javascript" src='/shopping/scripts/manager_product.js'><?php echo '</script'; ?>
+ type="text/javascript" src='/shopping/scripts/manager_edit_product.js'><?php echo '</script'; ?>
 >
+        
         <title>Document</title>
         <style>
-            .table-striped>thead>tr{
-                background-color: #ea6153;
-                
-                border-top-left-radius: 50px;
-                color: white;
-                }
+            .myform{
+                margin-top:20%;
+                width:50%;
+                margin-left:25%;
+                text-align:center;
+                border-radius: 20px;
+            }
             body {
             font-family: arial,"Microsoft JhengHei","微軟正黑體",sans-serif !important;
-            color:#a6a6a6;
             background-color:#1c1c1c; 
             }
-            th {
-            text-align: center;
+            #title {
+                color:red;
             }
-            tr {
-            text-align: center;
+            #edit_product {
+                background-color: #262626
             }
-            .item-color-1 {
-                background-color:#f6f6f6;
+            .descript {
+                color:red;
             }
-            .item-color-2 {
-                background-color:#e9e9e9;
-            }
+            
         </style>
     </head>
     <body>
+        
         <!-- 導覽列 -->
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -126,138 +126,121 @@ echo $_prefixVariable5;?>
                 
                 <ul class="nav navbar-nav navbar-right">
                     <form class="navbar-form navbar-left">
-                        <div class="form-group">
+                            <div class="form-group">
                             <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="button" class="btn btn-default">搜尋商品</button>
+                            </div>
+                            <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
                     <li><a href="/shopping/controller/userController.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
                     <li><a href="/shopping/controller/userController.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
-                    <li class="dropdown"></li>
+                    <li class="dropdown">
+                    </li>
                 </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+        
+        <div class='container'>        
+            <form id='edit_product' class="form-horizontal myform">
+            <fieldset>
 
+            <!-- Form Name -->
+            <legend class='descript'>修改產品</legend>
 
-        <div class='container'>
-            <div id="nowTime"></div>
-            <div>
-                <!-- 抬頭 -->
-                <div id='addTodoList'>
-                    <form id='add_message_form' class="form-horizontal">
-                        <fieldset>
-                            <legend style="color:red;">商品管理</legend>
-                        </fieldset>
-                        <span class=pull-right><a href="/shopping/controller/managercontroller.php/addproduct" class="btn btn-success">新增產品</a></span>
-                    </form>
-                </div>
-
-                <!-- 商品顯示區 -->
-                <table class="table table-striped" id='showTodoList'>
-                    <thead>
-                        <tr>
-                            <th>商品編號</th>
-                            <th>名稱</th>
-                            <th>價格</th>
-                            <th>商品狀態</th>
-                            <th>商品創建時間</th>
-                            <th>總銷售量</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id='messageArea'>
-                        <?php ob_start();
-$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['product_list']->value, 'product_item');
-if ($_from !== null) {
-foreach ($_from as $_smarty_tpl->tpl_vars['product_item']->value) {
+            <input type="hidden" name='product_id' value="<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['product_id'];
 $_prefixVariable6 = ob_get_clean();
 echo $_prefixVariable6;?>
+">
 
-                        <tr class="item-color-1">
-                            <td><?php ob_start();
-echo $_smarty_tpl->tpl_vars['product_item']->value['product_id'];
+            <!-- 名稱輸入 -->
+            <div class="form-group">
+                <label class="col-md-4 control-label descript"  for="name">產品名稱</label><span class='descript' id='name_signal'></span>
+                <div class="col-md-4">
+                    <input id="name" value = "<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['name'];
 $_prefixVariable7 = ob_get_clean();
 echo $_prefixVariable7;?>
-</td>
-                            <td><?php ob_start();
-echo $_smarty_tpl->tpl_vars['product_item']->value['name'];
+" autocomplete='off' name="name" type="text" placeholder="請輸入產品名稱" class="form-control input-md" required="">
+                    <span class="help-block"></span> 
+                </div>
+            </div>
+
+            <!-- 價格輸入-->
+            <div class="form-group">
+                <label class="col-md-4 control-label descript" for="price">價格</label><span class='descript' id='price_signal'></span>  
+                <div class="col-md-4">
+                    <input id="price" value="<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['price'];
 $_prefixVariable8 = ob_get_clean();
 echo $_prefixVariable8;?>
-</td>
-                            <td><?php ob_start();
-echo $_smarty_tpl->tpl_vars['product_item']->value['price'];
+" name="price" type="number" min="1" placeholder="請輸入價格" class="form-control input-md" required="">
+                    <span class="help-block"></span> 
+                </div>
+            </div>
+
+            <!-- 商品狀態選擇-->
+            <div class="form-group descript">
+                <label class="col-md-4 control-label" for="status">商品狀態</label><span id='status_signal'></span>
+                <div class="col-md-4">
+                    <select name="status" id="status">
+                        <option value="0" <?php ob_start();
+if ($_smarty_tpl->tpl_vars['product_item']->value['status'] == 0) {
 $_prefixVariable9 = ob_get_clean();
 echo $_prefixVariable9;?>
-</td>
-                            <?php ob_start();
-if ($_smarty_tpl->tpl_vars['product_item']->value['status'] == 0) {
+selected<?php ob_start();
+}
 $_prefixVariable10 = ob_get_clean();
 echo $_prefixVariable10;?>
-
-                            <td>待上架</td>
-                            <?php ob_start();
-} elseif ($_smarty_tpl->tpl_vars['product_item']->value['status'] == 1) {
+>待上架</option>
+                        <option value="1" <?php ob_start();
+if ($_smarty_tpl->tpl_vars['product_item']->value['status'] == 1) {
 $_prefixVariable11 = ob_get_clean();
 echo $_prefixVariable11;?>
-
-                            <td>售賣中</td>
-                            <?php ob_start();
-} elseif ($_smarty_tpl->tpl_vars['product_item']->value['status'] == 2) {
+selected<?php ob_start();
+}
 $_prefixVariable12 = ob_get_clean();
 echo $_prefixVariable12;?>
+>售賣中</option>
+                    </select>
+                </div>
+            </div>
 
-                            <td>已下架</td>
-                            <?php ob_start();
-}
+            <!-- 產品描述輸入-->
+            <div class="form-group">
+                    <label class="col-md-4 control-label descript" for="descript">產品描述</label><span class='descript' id='descript_signal'></span>
+                    <div class="col-md-4">
+                        <textarea name="descript" id="descript" cols="30" rows="5"><?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['descript'];
 $_prefixVariable13 = ob_get_clean();
 echo $_prefixVariable13;?>
-
-                            <td><?php ob_start();
-echo $_smarty_tpl->tpl_vars['product_item']->value['updated_at'];
-$_prefixVariable14 = ob_get_clean();
-echo $_prefixVariable14;?>
-</td>
-                            <td><?php ob_start();
-echo $_smarty_tpl->tpl_vars['product_item']->value['saled'];
-$_prefixVariable15 = ob_get_clean();
-echo $_prefixVariable15;?>
-</td>
-                            <td>
-                                <span class="pull-right">
-                                    <a href="/shopping/controller/managercontroller.php/editproduct/<?php ob_start();
-echo $_smarty_tpl->tpl_vars['product_item']->value['product_id'];
-$_prefixVariable16 = ob_get_clean();
-echo $_prefixVariable16;?>
-" class="btn btn-warning">
-                                        <span class="glyphicon glyphicon-pencil">
-                                        </span> 編輯
-                                    </a>
-                                    <span class="btn btn-danger delete_button">
-                                        <span class="glyphicon glyphicon-remove ">
-                                        </span>
-                                        刪除
-                                    </span>
-                                </span>
-                            </td>
-                        </tr>
-                        <?php ob_start();
-}
-}
-$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable17 = ob_get_clean();
-echo $_prefixVariable17;?>
-
-                    </tbody>
-                </table><!-- 會員顯示區結束 -->
+</textarea>
+                    </div>
             </div>
+            
+            <!-- 上傳圖片 -->
+            <div class="form-group descript">
+                <label class="col-md-4 control-label" for="image">變更圖片</label>
+                <div class="col-md-4">
+                    <input type="file" name='image'>
+                </div>
+            </div>
+
+            <!-- 送出按鈕 -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="login"></label>
+                <div class="col-md-4">
+                    <button type='button' id="edit_button" name="edit_button" class="btn btn-success">確定修改</button>
+                </div>
+            </div>
+
+            <input type="hidden" name='action' value='editProduct'>
+            
+            </fieldset>
+            </form>
         </div>
-        <input type="hidden" id='message' value=''>
         
         
-        <?php echo '<script'; ?>
- type="text/javascript" src=''><?php echo '</script'; ?>
->
         <?php echo '<script'; ?>
  
         src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" 
@@ -265,6 +248,7 @@ echo $_prefixVariable17;?>
         crossorigin="anonymous">
         <?php echo '</script'; ?>
 >
+        <!-- 清除message -->
     </body>
 </html><?php }
 }

@@ -20,7 +20,7 @@
         }
 
         /*
-         * 取得最新產品id
+         * 取得最新產品
          */
         public function getNewProductId()
         {
@@ -53,6 +53,38 @@
         {
             $product_list = $this->selectAllWithWhere($this->table, ['*'], ['is_delete'], [0], 'i');
             return $product_list;
+        }
+
+        /*
+         * 取得一項產品
+         */
+        public function getOneProduct($product_id)
+        {
+            $product_item = $this->selectSingleWithWhere(
+                $this->table,
+                ['*'],
+                ['product_id', 'is_delete'],
+                [$product_id, 0],
+                'ii'
+            );
+            return $product_item;
+        }
+
+        /*
+         * 修改一項產品
+         */
+
+        public function editOneProduct($name, $price, $status, $descript, $product_id)
+        {
+            $is_success = $this->update(
+                $this->table,
+                ['name', 'price', 'status', 'descript'],
+                [$name, $price, $status, $descript],
+                ['product_id'],
+                [$product_id],
+                'siisi'
+            );
+            return $is_success;
         }
 
         /*

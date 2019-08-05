@@ -10,7 +10,6 @@
     <style>
         .table-striped>thead>tr{
             background-color: #27ae60;
-            border: solid;
             color: white;
             text-align:center
             }
@@ -80,8 +79,8 @@
                         </div>
                         <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
-                    <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
                     <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
                     <li class="dropdown"></li>
                 </ul>
                 </div><!-- /.navbar-collapse -->
@@ -93,7 +92,7 @@
             <div id="nowTime"></div>
             <div>
                     <legend>購物車</legend>
-                <!-- 留言顯示區 -->
+                <!-- 會員顯示區 -->
                 <table class="table table-striped" id='title'>
                     <thead>
                         <tr>
@@ -107,7 +106,7 @@
                     </thead>
                     <tbody id='itemArea'>
                         <tr class="item-color-1">
-                            <td><img src="/shopping/img/img1.jpg" alt=""></td>
+                            <td><img src="/shopping/img/product_id=1.jpg" alt=""></td>
                             <td>玩具總動員</td>
                             <td>只是玩具</td>
                             <td>NT500</td>
@@ -131,7 +130,7 @@
                                 <td>0</td>
                                 <td>josh</td>
                                 <td>售賣中</td>
-                                <td>2019-07-29</td>
+                                <td>NT1000</td>
                                 <td><input type='number' value='20' min='1' style="width:50px"></td>
                                 <td >
                                     <span class="pull-right">
@@ -149,7 +148,7 @@
                                 </td>
                             </tr>
                     </tbody>
-                </table><!-- 留言顯示區結束 -->
+                </table><!-- 會員顯示區結束 -->
             </div>
         </div>
         <input type="hidden" id='message' value='{{$message}}'>

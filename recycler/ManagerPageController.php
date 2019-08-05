@@ -49,21 +49,7 @@
             $smarty->display('../views/maneger_member.html');
         }
         
-        /*
-         * 產品管理頁面
-         */
-        public function product()
-        {
-            $is_login = (checkToken()) ? false : true;
-            $user_item = getToken();
-            $product = new Product;
-            $product_list = $product->getAllProduct();
-            $smarty = new Smarty;
-            $smarty->assign('product_list', $product_list);
-            $smarty->assign('permission', $user_item['permission']);
-            $smarty->assign('is_login', $is_login);
-            $smarty->display('../views/manager_product.html');
-        }
+        
         
 
         /*

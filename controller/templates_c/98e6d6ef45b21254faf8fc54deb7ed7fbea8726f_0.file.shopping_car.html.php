@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-05 09:04:47
+/* Smarty version 3.1.33, created on 2019-08-06 17:37:44
   from 'C:\xampp\htdocs\shopping\views\shopping_car.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d47d50f4a7914_63060685',
+  'unifunc' => 'content_5d494a68f018b3_01497506',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '98e6d6ef45b21254faf8fc54deb7ed7fbea8726f' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\shopping_car.html',
-      1 => 1564988686,
+      1 => 1565084185,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d47d50f4a7914_63060685 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d494a68f018b3_01497506 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,23 +31,29 @@ function content_5d47d50f4a7914_63060685 (Smarty_Internal_Template $_smarty_tpl)
     <?php echo '<script'; ?>
  src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"><?php echo '</script'; ?>
 >
+    <?php echo '<script'; ?>
+ src="/shopping/scripts/functions.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="/shopping/scripts/shopping_car.js"><?php echo '</script'; ?>
+>
     <title>Document</title>
     <style>
-        .table-striped>thead>tr{
+        .table-striped > thead > tr {
             background-color: #27ae60;
             color: white;
             text-align:center
-            }
-        #itemArea>tr>td>img{
+        }
+        #itemArea > tr > td > img{
             width: 100px;
             height: 100px;
         }
         body {
             font-family: arial,"Microsoft JhengHei","微軟正黑體",sans-serif !important;
-            color:#a6a6a6;
+            color:#808080;
             background-color:#1c1c1c; 
         }
-        #button_colum{
+        #button_colum {
             width: 170px;
         }
         th {
@@ -135,63 +141,88 @@ echo $_prefixVariable3;?>
                         <tr>
                             <th style="width:110px">商品圖片</th>
                             <th>商品名稱</th>
-                            <th>商品描述</th>
+                            <th>商品庫存</th>
                             <th>商品價格</th>
                             <th>購買數量</th>
                             <th id='button_colum'></th>
                         </tr>
                     </thead>
                     <tbody id='itemArea'>
+                        <?php ob_start();
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['product_list']->value, 'product_item');
+if ($_from !== null) {
+foreach ($_from as $_smarty_tpl->tpl_vars['product_item']->value) {
+$_prefixVariable4 = ob_get_clean();
+echo $_prefixVariable4;?>
+
                         <tr class="item-color-1">
-                            <td><img src="/shopping/img/product_id=1.jpg" alt=""></td>
-                            <td>玩具總動員</td>
-                            <td>只是玩具</td>
-                            <td>NT500</td>
-                            <td><input type='number' value='1' min='1' style="width:50px"></td>
+                            <input type="hidden" value="<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['product_id'];
+$_prefixVariable5 = ob_get_clean();
+echo $_prefixVariable5;?>
+">
+                            <td><img src="/shopping/img/<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['image'];
+$_prefixVariable6 = ob_get_clean();
+echo $_prefixVariable6;?>
+" alt=""></td>
+                            <td><?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['name'];
+$_prefixVariable7 = ob_get_clean();
+echo $_prefixVariable7;?>
+</td>
+                            <td><?php ob_start();
+if ($_smarty_tpl->tpl_vars['product_item']->value['stock'] < 10) {
+$_prefixVariable8 = ob_get_clean();
+echo $_prefixVariable8;?>
+ <?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['stock'];
+$_prefixVariable9 = ob_get_clean();
+echo $_prefixVariable9;?>
+ <?php ob_start();
+} else {
+$_prefixVariable10 = ob_get_clean();
+echo $_prefixVariable10;?>
+ 庫存量充足 <?php ob_start();
+}
+$_prefixVariable11 = ob_get_clean();
+echo $_prefixVariable11;?>
+</td>
+                            <td><?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['price'];
+$_prefixVariable12 = ob_get_clean();
+echo $_prefixVariable12;?>
+</td>
+                            <td><input class='amount' type='number' min='1' value="<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['amount'];
+$_prefixVariable13 = ob_get_clean();
+echo $_prefixVariable13;?>
+" style="width:50px"></td>
                             <td>
-                                <span class="pull-right">
-                                    <span class="btn btn-warning">
-                                        <span class="glyphicon glyphicon-pencil">
-                                        </span>
-                                        編輯
-                                    </span>
+                                <span class="pull-right delete_button">
                                     <span class="btn btn-danger">
                                         <span class="glyphicon glyphicon-remove">
                                         </span>
-                                        移除
+                                        從購物車移除
                                     </span>
                                 </span>
                             </td>
                         </tr>
-                        <tr class='item-color-2'>
-                                <td>0</td>
-                                <td>josh</td>
-                                <td>售賣中</td>
-                                <td>NT1000</td>
-                                <td><input type='number' value='20' min='1' style="width:50px"></td>
-                                <td >
-                                    <span class="pull-right">
-                                        <span class="btn btn-warning">
-                                            <span class="glyphicon glyphicon-pencil">
-                                            </span>
-                                            編輯
-                                        </span>
-                                        <span class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove">
-                                            </span>
-                                            移除
-                                        </span>
-                                    </span>
-                                </td>
-                            </tr>
+                        <?php ob_start();
+}
+}
+$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
+$_prefixVariable14 = ob_get_clean();
+echo $_prefixVariable14;?>
+
                     </tbody>
                 </table><!-- 會員顯示區結束 -->
             </div>
         </div>
         <input type="hidden" id='message' value='<?php ob_start();
 echo $_smarty_tpl->tpl_vars['message']->value;
-$_prefixVariable4 = ob_get_clean();
-echo $_prefixVariable4;?>
+$_prefixVariable15 = ob_get_clean();
+echo $_prefixVariable15;?>
 '>
         
         

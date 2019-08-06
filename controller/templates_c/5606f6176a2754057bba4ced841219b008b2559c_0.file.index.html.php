@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-05 09:54:48
+/* Smarty version 3.1.33, created on 2019-08-06 16:42:44
   from 'C:\xampp\htdocs\shopping\views\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d478c6893c5d2_10967194',
+  'unifunc' => 'content_5d493d84bcfee2_75542581',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5606f6176a2754057bba4ced841219b008b2559c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\index.html',
-      1 => 1564970073,
+      1 => 1565080947,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d478c6893c5d2_10967194 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d493d84bcfee2_75542581 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,6 +31,12 @@ function content_5d478c6893c5d2_10967194 (Smarty_Internal_Template $_smarty_tpl)
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <?php echo '<script'; ?>
  src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="/shopping/scripts/functions.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="/shopping/scripts/index.js"><?php echo '</script'; ?>
 >
     <title>Document</title>
     <style>
@@ -122,8 +128,17 @@ echo $_prefixVariable5;?>
                         </div>
                         <button type="button" class="btn btn-default">搜尋商品</button>
                 </form>
-                <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
-                <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
+                <li>
+                    <a href="/shopping/controller/usercontroller.php/shoppingcar">
+                        <span class="glyphicon glyphicon-list-alt"></span> 我的訂單
+                    </a>
+                </li>
+                <li>
+                    <a href="/shopping/controller/usercontroller.php/shoppingcar">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
+                        <span class="badge badge-light">0</span>
+                    </a>
+                </li>
                 <li class="dropdown">
                 </li>
             </ul>
@@ -180,16 +195,25 @@ $_prefixVariable11 = ob_get_clean();
 echo $_prefixVariable11;?>
 套</b></div>
                 <div class=col-md-12 >
-                    <span class='btn btn-warning'><span class="glyphicon glyphicon-eye-open"></span> 商品資訊</span>
-                    <span class='btn btn-info'><span class="glyphicon glyphicon-shopping-cart"></span> 加入購物車</span>
+                    <input type="hidden" value = <?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['product_id'];
+$_prefixVariable12 = ob_get_clean();
+echo $_prefixVariable12;?>
+>
+                    <span class='btn btn-warning'>
+                        <span class="glyphicon glyphicon-eye-open"></span> 商品資訊
+                    </span>
+                    <span class='btn btn-info add_button'>
+                        <span class="glyphicon glyphicon-shopping-cart"></span> 加入購物車
+                    </span>
                 </div>
             </div>
             <?php ob_start();
 }
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable12 = ob_get_clean();
-echo $_prefixVariable12;?>
+$_prefixVariable13 = ob_get_clean();
+echo $_prefixVariable13;?>
 
         </div>
     </div>

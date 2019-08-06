@@ -11,10 +11,11 @@
 <body>
     <script>
         $.ajax({
-            url:'controller/usercontroller.php/checkaccount',
+            url:'controller/usercontroller.php/addproduct',
             type:'post',
             data:{
-                'account' :'joshtest5',
+                'order_menu_id': 42,
+                'product_id': 19
             },
             success:function(e){
                 console.log(e);

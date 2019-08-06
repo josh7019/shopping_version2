@@ -42,7 +42,7 @@
          */
         public function getAllProductOnSale()
         {
-            $product_list = $this->selectAllWithWhere($this->table, ['*'], ['status'], [1], 'i');
+            $product_list = $this->selectAllWithWhere($this->table, ['*'], ['status', 'is_delete'], [1, 0], 'ii');
             return $product_list;
         }
 
@@ -66,6 +66,21 @@
                 ['product_id', 'is_delete'],
                 [$product_id, 0],
                 'ii'
+            );
+            return $product_item;
+        }
+
+        /*
+         * 取得一項產品
+         */
+        public function getOneProductWithoutDelete($product_id)
+        {
+            $product_item = $this->selectSingleWithWhere(
+                $this->table,
+                ['*'],
+                ['product_id'],
+                [$product_id],
+                'i'
             );
             return $product_item;
         }
@@ -95,4 +110,6 @@
             $is_success = $this->update($this->table, ['is_delete'], [1], ['product_id'], [$product_id], 'ii');
             return $is_success;
         }
+
+        
     }

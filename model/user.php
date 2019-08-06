@@ -5,12 +5,18 @@
     {
         private $table = 'user';
 
+        /*
+         * 取得帳號所有資料
+         */
         public function getAccount($account)
         {
             $user_item = $this->selectSingleWithWhere($this->table, ['*'], ['account'], [$account], 's');
             return $user_item;
         }
 
+        /*
+         * 註冊
+         */
         public function signup($account, $password, $name, $id_number)
         {
             $is_success = $this->insertInto(
@@ -22,17 +28,23 @@
             return $is_success;
         }
 
+        /*
+         *  更新token
+         */
         public function addToken($account, $token)
         {
             $is_success = $this->update($this->table, ['token'], [$token], ['account'], [$account], 'ss');
             return $is_success;
         }
 
+        /*
+         * 藉由token取得使用者資訊
+         */
         public function getUserByToken($token)
         {
             $user_item = $this->selectSingleWithWhere(
                 $this->table,
-                ['user_id', 'account', 'id_number', 'name', 'cash', 'permission', 'created_at', 'updated_at'],
+                ['user_id', 'account', 'id_number', 'name', 'cash', 'order_menu_id', 'permission', 'created_at', 'updated_at'],
                 ['token'],
                 [$token],
                 's'
@@ -40,6 +52,9 @@
             return $user_item;
         }
 
+        /*
+         * 取得所有使用者資訊
+         */
         public function getAllUser()
         {
             $user_list = $this->selectAll(
@@ -49,6 +64,9 @@
             return $user_list;
         }
 
+        /*
+         * 更新權限
+         */
         public function updatePermission($user_id, $permission)
         {
             $is_success = $this->update(
@@ -61,5 +79,23 @@
             );
             return $is_success;
         }
+
+        /*
+         * 更新使用中購物車
+         */
+        public function updateOrderMenuId($user_id, $order_menu_id)
+        {
+            $is_success = $this->update(
+                $this->table,
+                ['order_menu_id'],
+                [$order_menu_id],
+                ['user_id'],
+                [$user_id],
+                'ii'
+            );
+            return $is_success;
+        }
+
+
     }
     

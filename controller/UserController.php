@@ -121,19 +121,9 @@
                     $token = produceToken();
                     $user->addToken($account, $token);
                     setcookie('token', $token, time() + 3600 ,'/');
-                    ##檢查購物車
-                    $order_menu = new OrderMenu;
-                    $order_menu_item = $order_menu->getLastListByUserId($user_item['user_id']);
-                    if (isset($order_menu_item['user_id'])) {
-                        setcookie('order_menu_id', $order_menu_item['order_menu_id'], time() + 3600 , '/');
-                    } else {
-                        $is_success = $order_menu->addList($user_item['user_id']);
-                        if($is_success){
-                            $order_menu_item = $order_menu->getLastListByUserId($user_item['user_id']);
-                            setcookie('order_menu_id', $order_menu_item['order_menu_id'], time() + 3600 , '/');
-                        }
-                    }
-                    $data=[
+                    ##檢查並更新購物車
+                    checkOrderMenuId($user_item);
+                    $data = [
                         'alert' => '登入成功',
                         'location' => '/shopping/controller/userController.php/index',
                     ];
@@ -162,6 +152,7 @@
         {
             setcookie ("token", "test", time()-100, '/');
             setcookie ("order_menu_id", "test", time()-100, '/');
+            
             $data = [
                 'alert' => '登出成功',
                 'location' => '/shopping/controller/userController.php/index',
@@ -176,13 +167,109 @@
         public function GET_shoppingCar()
         {
             $is_login = (checkToken()) ? false : true;
+            $user_item = getToken();
+            $order_menu_id = $user_item['order_menu_id'];
+            $order_detail = new OrderDetail;
+            $product_id_list = $order_detail->getAllProductId($order_menu_id);
+            $product_list = [];
+            $product = new Product;
+            foreach($product_id_list as $product_id) {
+                $product_item = $product->getOneProduct($product_id["product_id"]);
+                if (!isset($product_item["product_id"])) {
+                    continue;
+                }
+                $order_detail_item = $order_detail->getOne($user_item['order_menu_id'], $product_id["product_id"]);
+                $product_item['amount'] = $order_detail_item['amount'];
+                $product_list[] = $product_item;
+            }
             $smarty = new Smarty;
+            $smarty->assign('product_list', $product_list);
             $smarty->assign('is_login', $is_login);
             $smarty->display('../views/shopping_car.html');
         }
+
+        /*
+         * 將產品加到購物車
+         */
+        public function POST_addProduct()
+        {
+            $product_id = $_POST['product_id'];
+            $user = new User;
+            $user_item = $user->getUserByToken($_COOKIE['token']);
+            $order_menu_id = $user_item['order_menu_id'];
+            $order_detail = new OrderDetail;
+            $product_count = $order_detail->getOneCount($order_menu_id, $product_id);
+            if($product_count['count(*)']) {
+                $data = [
+                    'alert' => '產品已在購物車',
+                    'is_success' => false
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            $is_success = $order_detail->addProduct($order_menu_id, $product_id);
+            if ($is_success) {
+                $data = [
+                    'alert' => '加入成功',
+                    'is_success' => true
+                ];
+            }
+            echo json_encode($data);
+        }
+
+        /*
+         * 將產品從購物車移除
+         */
+        public function DELETE_product()
+        {
+            parse_str(file_get_contents('php://input'), $_DELETE);
+            $user_item = getToken();
+            $order_menu_id = $user_item['order_menu_id'];
+            $product_id = $_DELETE['product_id'];
+            $order_detail = new OrderDetail;
+            $is_success = $order_detail->deleteOne($order_menu_id, $product_id);
+            if ($is_success) {
+                $data = [
+                    'alert' => '移除成功',
+                    'is_success' => true
+                ];
+            } else {
+                $data = [
+                    'alert' => '商品不存在',
+                    'is_success' => false
+                ];
+            }
+            echo json_encode($data);
+        }
+
+        /*
+         * 修改購物車中產品數量
+         */
+        public function PUT_product()
+        {
+            parse_str(file_get_contents('php://input'), $_PUT);
+            $user_item = getToken();
+            $order_menu_id = $user_item['order_menu_id'];
+            $product_id = $_PUT['product_id'];
+            $amount = $_PUT['amount'];
+            $order_detail = new OrderDetail;
+            $is_success = $order_detail->updateAmount($amount, $order_menu_id, $product_id);
+            if ($is_success) {
+                $data = [
+                    'alert' => '修改數量成功',
+                    'is_success' => true
+                ];
+            } else {
+                $data = [
+                    'alert' => '修改數量失敗',
+                    'is_success' => false
+                ];
+            }
+            echo json_encode($data);
+        }
     }
 
-    $url_list = explode('/',$_SERVER['REQUEST_URI']);
+    $url_list = explode('/' , $_SERVER['REQUEST_URI']);
     $action = (isset($url_list[4])) ? $url_list[4] : '';
     $id = (isset($url_list[5])) ? $url_list[5] : '';
     $method = $_SERVER['REQUEST_METHOD'];

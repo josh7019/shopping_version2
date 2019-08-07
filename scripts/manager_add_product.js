@@ -6,6 +6,7 @@ let descript;
 let is_price_right;
 let is_name_right;
 let is_descript_right;
+let is_stock_right;
 
 window.onload = function(){
     add_product = document.getElementById('add_product');
@@ -13,11 +14,13 @@ window.onload = function(){
     price = document.getElementById('price');
     name = document.getElementById('name');
     descript = document.getElementById('descript');
+    stock = document.getElementById('stock');
 
-    descript.oninput = function(event){checkDescript(event);}
-    price.oninput = function(event){checkPrice(event);}
-    name.oninput = function(event){checkName(event);}
-    add_button.onclick = function(){alert('not yet'); return false;}
+    descript.oninput = function(event) {checkDescript(event);}
+    price.oninput = function(event) {checkPrice(event);}
+    name.oninput = function(event) {checkName(event);}
+    stock.oninput = function(event) {checkStock(event);}
+    add_button.onclick = function() {alert('not yet'); return false;}
 }
 
 
@@ -36,6 +39,20 @@ function checkPrice(e){
     
 }
 
+function checkStock(e){
+    price = e.target.value;
+    
+    if (!price.match(/^[1-9][0-9]{0,}$/)) {
+        document.getElementById('stock_signal').innerHTML = 'x';
+        issubmit()
+        is_stock_right = false;
+    } else {
+        document.getElementById('stock_signal').innerHTML = 'o';
+        issubmit()
+        is_stock_right = true;
+    }
+    
+}
 
 function checkName(e){
     product_name = e.target.value;
@@ -63,7 +80,7 @@ function checkDescript(e){
 
 
 function issubmit(){
-    if (is_price_right && is_name_right && is_descript_right) {
+    if (is_price_right && is_name_right && is_descript_right && is_stock_right) {
         add_button.onclick = function(){submit();};
     } else {
         add_button.onclick = function(){alert('格式有誤')};

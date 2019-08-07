@@ -8,13 +8,13 @@
         /*
          * 新增一項產品
          */
-        public function addProduct($name, $price, $status, $descript)
+        public function addProduct($name, $price, $status, $descript, $stock)
         {
             $is_success = $this->insertInto(
                 $this->table,
-                ['name', 'price', 'status', 'descript'],
-                [$name, $price, $status, $descript],
-                'siis'
+                ['name', 'price', 'status', 'descript', 'stock'],
+                [$name, $price, $status, $descript, $stock],
+                'siisi'
             );
             return $is_success;
         }
@@ -56,7 +56,7 @@
         }
 
         /*
-         * 取得一項產品
+         * 取得一項未刪除產品
          */
         public function getOneProduct($product_id)
         {
@@ -86,18 +86,33 @@
         }
 
         /*
+         * 取得一項未刪除且未下架產品
+         */
+        public function getOneProductOnSale($product_id)
+        {
+            $product_item = $this->selectSingleWithWhere(
+                $this->table,
+                ['*'],
+                ['product_id', 'status','is_delete'],
+                [$product_id, 1, 0],
+                'iii'
+            );
+            return $product_item;
+        }
+
+        /*
          * 修改一項產品
          */
 
-        public function editOneProduct($name, $price, $status, $descript, $product_id)
+        public function editOneProduct($name, $price, $status, $descript, $stock, $product_id)
         {
             $is_success = $this->update(
                 $this->table,
-                ['name', 'price', 'status', 'descript'],
-                [$name, $price, $status, $descript],
+                ['name', 'price', 'status', 'descript', 'stock'],
+                [$name, $price, $status, $descript, $stock],
                 ['product_id'],
                 [$product_id],
-                'siisi'
+                'siisii'
             );
             return $is_success;
         }

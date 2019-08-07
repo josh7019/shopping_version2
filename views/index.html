@@ -87,7 +87,13 @@
                 <li>
                     <a href="/shopping/controller/usercontroller.php/shoppingcar">
                         <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
-                        <span class="badge badge-light">0</span>
+                        <span class="badge badge-light" id='product_count'>
+                            {{if isset($order_detail_list_length)}}
+                            {{$order_detail_list_length}}
+                            {{else}}
+                            0
+                            {{/if}}
+                        </span>
                     </a>
                 </li>
                 <li class="dropdown">
@@ -110,7 +116,6 @@
         <div class='row'>
             <div class="col-md-12" id='title'>
                 <h2>商品目錄</h2>
-                <p>The .table-bordered class adds borders to a table:</p>
             </div>
             {{foreach $product_list as $product_item}}
             <div class=col-md-3 style='background-color: #262626'>

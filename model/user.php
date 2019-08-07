@@ -44,7 +44,7 @@
         {
             $user_item = $this->selectSingleWithWhere(
                 $this->table,
-                ['user_id', 'account', 'id_number', 'name', 'cash', 'order_menu_id', 'permission', 'created_at', 'updated_at'],
+                ['user_id', 'account', 'id_number', 'name', 'cash', 'permission', 'created_at', 'updated_at'],
                 ['token'],
                 [$token],
                 's'
@@ -96,6 +96,20 @@
             return $is_success;
         }
 
-
+        /*
+         * 結帳
+         */
+        public function checkout($cash, $user_id)
+        {
+            $is_success = $this->update(
+                $this->table,
+                ['cash'],
+                [$cash],
+                ['user_id'],
+                [$user_id],
+                'ii'
+            );
+            return $is_success;
+        }
     }
     

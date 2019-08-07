@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-05 09:13:42
+/* Smarty version 3.1.33, created on 2019-08-07 10:30:30
   from 'C:\xampp\htdocs\shopping\views\login.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d47d726549cd6_89015192',
+  'unifunc' => 'content_5d4a8c267474c8_81982111',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5357c5c0575fa1759eb5742d137a1e2baa296255' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\login.html',
-      1 => 1564989199,
+      1 => 1565166628,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d47d726549cd6_89015192 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4a8c267474c8_81982111 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,7 +105,7 @@ function content_5d47d726549cd6_89015192 (Smarty_Internal_Template $_smarty_tpl)
                             <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
                     <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
                     <li class="dropdown">
                     </li>
                 </ul>

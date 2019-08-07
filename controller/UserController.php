@@ -21,10 +21,18 @@
         public function GET_index()
         {
             $is_login = (checkToken()) ? false : true;
-            $user_item = getToken();
+            $user_item = getUser();
+            
             $product = new Product;
             $product_list = $product->getAllProductOnSale();
             $smarty = new Smarty;
+            if (!$is_login) {
+                $order_menu_id = checkAndGetOrderMenuId($user_item);
+                $order_detail = new OrderDetail;
+                $order_detail_list = $order_detail->getAllProductId($order_menu_id);
+                $smarty->assign('order_detail_list_length', count($order_detail_list));
+            }
+            
             $smarty->assign('product_list', $product_list);
             $smarty->assign('permission', $user_item['permission']);
             $smarty->assign('is_login', $is_login);
@@ -122,7 +130,7 @@
                     $user->addToken($account, $token);
                     setcookie('token', $token, time() + 3600 ,'/');
                     ##檢查並更新購物車
-                    checkOrderMenuId($user_item);
+                    checkAndGetOrderMenuId($user_item);
                     $data = [
                         'alert' => '登入成功',
                         'location' => '/shopping/controller/userController.php/index',
@@ -167,23 +175,31 @@
         public function GET_shoppingCar()
         {
             $is_login = (checkToken()) ? false : true;
-            $user_item = getToken();
-            $order_menu_id = $user_item['order_menu_id'];
+            $user_item = getUser();
+            $order_menu_id = checkAndGetOrderMenuId($user_item);
             $order_detail = new OrderDetail;
             $product_id_list = $order_detail->getAllProductId($order_menu_id);
             $product_list = [];
             $product = new Product;
             foreach($product_id_list as $product_id) {
-                $product_item = $product->getOneProduct($product_id["product_id"]);
+                $product_item = $product->getOneProductOnSale($product_id["product_id"]);
                 if (!isset($product_item["product_id"])) {
+                    $order_detail->deleteOne($order_menu_id,$product_id["product_id"]);
                     continue;
                 }
-                $order_detail_item = $order_detail->getOne($user_item['order_menu_id'], $product_id["product_id"]);
+                $order_detail_item = $order_detail->getOne(checkAndGetOrderMenuId($user_item), $product_id["product_id"]);
                 $product_item['amount'] = $order_detail_item['amount'];
                 $product_list[] = $product_item;
             }
+            $total_price = getTotalPrice($order_menu_id,$order_menu_id);
+            $user_final_cash = $user_item['cash'] - $total_price;
+
             $smarty = new Smarty;
+
+            $smarty->assign('user_item', $user_item);
             $smarty->assign('product_list', $product_list);
+            $smarty->assign('total_price', $total_price);
+            $smarty->assign('user_final_cash', $user_final_cash);
             $smarty->assign('is_login', $is_login);
             $smarty->display('../views/shopping_car.html');
         }
@@ -193,16 +209,26 @@
          */
         public function POST_addProduct()
         {
+            ##檢查是否登入
+            if (!checkToken()) {
+                $data = [
+                    'alert' => '請先登入',
+                    'is_success' => 2,
+                    'location' => '/shopping/controller/usercontroller.php/login'
+                ];
+                echo json_encode($data);
+                exit();
+            }
             $product_id = $_POST['product_id'];
             $user = new User;
             $user_item = $user->getUserByToken($_COOKIE['token']);
-            $order_menu_id = $user_item['order_menu_id'];
+            $order_menu_id = checkAndGetOrderMenuId($user_item);
             $order_detail = new OrderDetail;
             $product_count = $order_detail->getOneCount($order_menu_id, $product_id);
             if($product_count['count(*)']) {
                 $data = [
                     'alert' => '產品已在購物車',
-                    'is_success' => false
+                    'is_success' => 0
                 ];
                 echo json_encode($data);
                 exit();
@@ -211,7 +237,7 @@
             if ($is_success) {
                 $data = [
                     'alert' => '加入成功',
-                    'is_success' => true
+                    'is_success' => 1
                 ];
             }
             echo json_encode($data);
@@ -223,15 +249,19 @@
         public function DELETE_product()
         {
             parse_str(file_get_contents('php://input'), $_DELETE);
-            $user_item = getToken();
-            $order_menu_id = $user_item['order_menu_id'];
+            $user_item = getUser();
+            $order_menu_id = checkAndGetOrderMenuId($user_item);
             $product_id = $_DELETE['product_id'];
             $order_detail = new OrderDetail;
             $is_success = $order_detail->deleteOne($order_menu_id, $product_id);
+            $total_price = getTotalPrice($order_menu_id);
+            $user_final_cash =  $user_item['cash'] - $total_price;
             if ($is_success) {
                 $data = [
-                    'alert' => '移除成功',
-                    'is_success' => true
+                    'alert' => '',
+                    'is_success' => true,
+                    'total_price' => $total_price,
+                    'user_final_cash' => $user_final_cash
                 ];
             } else {
                 $data = [
@@ -248,24 +278,126 @@
         public function PUT_product()
         {
             parse_str(file_get_contents('php://input'), $_PUT);
-            $user_item = getToken();
-            $order_menu_id = $user_item['order_menu_id'];
+            $user_item = getUser();
+            $order_menu_id = checkAndGetOrderMenuId($user_item);
             $product_id = $_PUT['product_id'];
             $amount = $_PUT['amount'];
+            if (!preg_match('/^[1-9][0-9]{0,}$/', $amount)) {
+                exit();
+            }
+            
+            $product = new Product;
+            $product_item = $product->getOneProductOnSale($product_id);
+            ## 判斷產品是否售賣中
+            if (!isset($product_item['product_id'])) {
+                $order_detail = new OrderDetail;
+                $is_success = $order_detail->updateAmount($amount, $order_menu_id, $product_id);
+                $total_price = getTotalPrice($order_menu_id);
+                $user_final_cash =  $user_item['cash'] - $total_price;
+                $data = [
+                    'alert' => '商品已下架',
+                    'is_success' => 2,
+                    'total_price'=> $total_price,
+                    'user_final_cash' => $user_final_cash
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            ## 判斷庫存量是否足夠
+            if ($amount > $product_item['stock']) {
+                $amount = $product_item['stock'];
+                $order_detail = new OrderDetail;
+                $is_success = $order_detail->updateAmount($amount, $order_menu_id, $product_id);
+                $total_price = getTotalPrice($order_menu_id);
+                $user_final_cash =  $user_item['cash'] - $total_price;
+                $data = [
+                    'alert' => '庫存量不足',
+                    'is_success' => 3,
+                    'amount' => $amount,
+                    'total_price'=> $total_price,
+                    'user_final_cash' => $user_final_cash
+                ];
+                echo json_encode($data);
+                exit();
+            }
             $order_detail = new OrderDetail;
             $is_success = $order_detail->updateAmount($amount, $order_menu_id, $product_id);
+            $total_price = getTotalPrice($order_menu_id);
+            $user_final_cash =  $user_item['cash'] - $total_price;
+            
+
             if ($is_success) {
                 $data = [
                     'alert' => '修改數量成功',
-                    'is_success' => true
+                    'is_success' => 1,
+                    'total_price'=> $total_price,
+                    'user_final_cash' => $user_final_cash
                 ];
             } else {
                 $data = [
-                    'alert' => '修改數量失敗',
-                    'is_success' => false
+                    'alert' => '數量相同或商品不存在',
+                    'is_success' => 0
                 ];
             }
             echo json_encode($data);
+        }
+        
+        /*
+         * 結帳
+         */
+        public function UPDATE_checkOut()
+        {
+            $user_item = getUser();
+            $total_price = getTotalPrice(checkAndGetOrderMenuId($user_item));
+            $final_price= $user_item['cash'] - $total_price;
+            ## 檢查餘額是否足夠
+            if ($final_price < 0) {
+                $data = [
+                    'alert' => '餘額不足',
+                    'is_success' => false,
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            $order_menu = new OrderMenu;
+            $user = new User;
+            $is_success_user = $user->checkOut($final_price, $user_item['user_id']);
+            if (!$is_success_user) {
+                $data = [
+                    'alert' => '結帳失敗',
+                    'is_success' => false,
+                ];
+                echo json_encode($data);
+                exit();
+            }
+            $is_success_order = $order_menu->checkOut(checkAndGetOrderMenuId($user_item));
+            
+            if ($is_success_order) {
+                updateDealPrice(checkAndGetOrderMenuId($user_item));
+                $data = [
+                    'alert' => '購買成功,感謝您的光臨',
+                    'is_success' => false,
+                    'location' => '/shopping/controller/usercontroller.php/index'
+                ];
+                checkAndGetOrderMenuId($user_item);
+                echo json_encode($data);
+                exit();
+            } else {
+                $data = [
+                    'alert' => '結帳失敗,訂單不存在或已經結帳',
+                    'is_success' => false,
+                ];
+                echo json_encode($data);
+                exit();
+            }
+        }
+
+        /*
+         * 訂單記錄頁面
+         */
+        public function GET_shoppingHistory()
+        {
+
         }
     }
 

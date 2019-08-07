@@ -78,25 +78,36 @@ function unhtmlspecialchars(ch) {
     }
 
 // 顯示訊息
-function showSingal($signal) {
-    if ($signal) {
-        alert($signal);
+function showSingal(signal) {
+    if (signal) {
+        alert(signal);
     }
 }
 
-//跳轉頁面
-function direct($location) {
-    if ($location) {
-        window.location=$location;
+// 跳轉頁面
+function direct(location) {
+    if (location) {
+        window.location=location;
     }
 }
 
-//檢查內容是否為空
-function checkContent(str){   
+// 檢查內容是否為空
+function checkContent(str){
     // str = e.target.value;
     if (str.match(/\S{1,}/)) {
-        return true;  
-    } else {    
+        return true;
+    } else {
         return false;
     }
+}
+
+// 檢查格式不為小數點或負值
+function checkUnsigned(value){
+    
+    if (!value.match(/^[1-9][0-9]{0,}$/)) {
+        return false;
+    } else {
+        return true;
+    }
+    
 }

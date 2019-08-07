@@ -6,6 +6,7 @@ let descript;
 let is_price_right = true;
 let is_name_right = true;
 let is_descript_right = true;
+let is_stock_right = true;
 
 window.onload = function(){
     
@@ -14,10 +15,12 @@ window.onload = function(){
     price = document.getElementById('price');
     name = document.getElementById('name');
     descript = document.getElementById('descript');
-    
+    stock = document.getElementById('stock');
+
     descript.oninput = function(event){checkDescript(event);}
     price.oninput = function(event){checkPrice(event);}
     name.oninput = function(event){checkName(event);}
+    stock.oninput = function(event) {checkStock(event);}
     edit_button.onclick = function(){alert('not yet'); return false;}
     issubmit();
 }
@@ -34,6 +37,21 @@ function checkPrice(e){
         document.getElementById('price_signal').innerHTML = 'o';
         issubmit()
         is_price_right = true;
+    }
+    
+}
+
+function checkStock(e){
+    price = e.target.value;
+    
+    if (!price.match(/^[1-9][0-9]{0,}$/)) {
+        document.getElementById('stock_signal').innerHTML = 'x';
+        issubmit()
+        is_stock_right = false;
+    } else {
+        document.getElementById('stock_signal').innerHTML = 'o';
+        issubmit()
+        is_stock_right = true;
     }
     
 }

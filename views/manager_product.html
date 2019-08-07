@@ -111,6 +111,7 @@
                             <th>商品編號</th>
                             <th>名稱</th>
                             <th>價格</th>
+                            <th>庫存</th>
                             <th>商品狀態</th>
                             <th>商品創建時間</th>
                             <th>總銷售量</th>
@@ -123,6 +124,7 @@
                             <td>{{$product_item['product_id']}}</td>
                             <td>{{$product_item['name']}}</td>
                             <td>{{$product_item['price']}}</td>
+                            <td>{{$product_item['stock']}}</td>
                             {{if $product_item['status'] == 0}}
                             <td>待上架</td>
                             {{elseif $product_item['status'] == 1}}

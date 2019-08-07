@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-05 12:27:45
+/* Smarty version 3.1.33, created on 2019-08-07 15:49:13
   from 'C:\xampp\htdocs\shopping\views\maneger_edit_product.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d47b041e4b043_42252727',
+  'unifunc' => 'content_5d4a827982cef8_29528347',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '2005ce8bf549d2a4a82f5d98def70cafcae62413' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\maneger_edit_product.html',
-      1 => 1564979260,
+      1 => 1565164147,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d47b041e4b043_42252727 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4a827982cef8_29528347 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -179,6 +179,19 @@ echo $_prefixVariable8;?>
                 </div>
             </div>
 
+            <!-- 庫存輸入-->
+            <div class="form-group">
+                    <label class="col-md-4 control-label descript" for="price">庫存量</label><span class='descript' id='stock_signal'></span>  
+                    <div class="col-md-4">
+                        <input id="price" value="<?php ob_start();
+echo $_smarty_tpl->tpl_vars['product_item']->value['stock'];
+$_prefixVariable9 = ob_get_clean();
+echo $_prefixVariable9;?>
+" name="stock" type="number" min="1" placeholder="請輸入庫存量" class="form-control input-md" required="">
+                        <span class="help-block"></span> 
+                    </div>
+                </div>
+
             <!-- 商品狀態選擇-->
             <div class="form-group descript">
                 <label class="col-md-4 control-label" for="status">商品狀態</label><span id='status_signal'></span>
@@ -186,21 +199,21 @@ echo $_prefixVariable8;?>
                     <select name="status" id="status">
                         <option value="0" <?php ob_start();
 if ($_smarty_tpl->tpl_vars['product_item']->value['status'] == 0) {
-$_prefixVariable9 = ob_get_clean();
-echo $_prefixVariable9;?>
-selected<?php ob_start();
-}
 $_prefixVariable10 = ob_get_clean();
 echo $_prefixVariable10;?>
+selected<?php ob_start();
+}
+$_prefixVariable11 = ob_get_clean();
+echo $_prefixVariable11;?>
 >待上架</option>
                         <option value="1" <?php ob_start();
 if ($_smarty_tpl->tpl_vars['product_item']->value['status'] == 1) {
-$_prefixVariable11 = ob_get_clean();
-echo $_prefixVariable11;?>
-selected<?php ob_start();
-}
 $_prefixVariable12 = ob_get_clean();
 echo $_prefixVariable12;?>
+selected<?php ob_start();
+}
+$_prefixVariable13 = ob_get_clean();
+echo $_prefixVariable13;?>
 >售賣中</option>
                     </select>
                 </div>
@@ -212,8 +225,8 @@ echo $_prefixVariable12;?>
                     <div class="col-md-4">
                         <textarea name="descript" id="descript" cols="30" rows="5"><?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['descript'];
-$_prefixVariable13 = ob_get_clean();
-echo $_prefixVariable13;?>
+$_prefixVariable14 = ob_get_clean();
+echo $_prefixVariable14;?>
 </textarea>
                     </div>
             </div>

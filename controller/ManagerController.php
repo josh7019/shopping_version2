@@ -65,7 +65,7 @@
         public function GET_product()
         {
             $is_login = (checkToken()) ? false : true;
-            $user_item = getToken();
+            $user_item = getUser();
             $product = new Product;
             $product_list = $product->getAllProduct();
             $smarty = new Smarty;
@@ -141,7 +141,7 @@
         public function GET_addProduct()
         {
             $is_login = (checkToken()) ? false : true;
-            $user_item = getToken();
+            $user_item = getUser();
             $smarty = new Smarty;
             $smarty->assign('permission', $user_item['permission']);
             $smarty->assign('is_login', $is_login);
@@ -157,9 +157,10 @@
             $name = $_POST['name'];
             $price = $_POST['price'];
             $status = $_POST['status'];
+            $stock = $_POST['stock'];
             $descript = $_POST['descript'];
             $product = new Product;
-            $is_success = $product->addProduct($name, $price, $status, $descript);
+            $is_success = $product->addProduct($name, $price, $status, $descript, $stock);
             $data = [
                 'alert' => '新增產品成功',
                 'location' => '/shopping/controller/managercontroller.php/product'
@@ -175,7 +176,7 @@
         public function GET_editProduct()
         {
             $is_login = (checkToken()) ? false : true;
-            $user_item = getToken();
+            $user_item = getUser();
             $product = new Product();
             $product_item = $product->getOneProduct($this->id);
             $smarty = new Smarty;
@@ -191,7 +192,7 @@
         public function GET_member()
         {
             $is_login = (checkToken()) ? false : true;
-            $user_item = getToken();
+            $user_item = getUser();
             $user = new User;
             $user_list = $user->getAllUser();
             $smarty = new Smarty;

@@ -107,94 +107,39 @@
         <div class='container'>
             <div id="nowTime"></div>
             <div>
-                    <legend style = "color: red">購物車</legend>
+                    <legend style = "color: red">購物紀錄</legend>
                 <!-- 會員顯示區 -->
                 <table class="table table-striped" id='title'>
                     <thead id = 'head1'>
                         <tr>
-                            <th style="width:110px">商品圖片</th>
-                            <th>商品名稱</th>
-                            <th>商品庫存</th>
-                            <th>商品單價</th>
-                            <th>購買數量</th>
+                            <th style="width:110px"></th>
+                            <th></th>
+                            <th>訂單編號</th>
+                            <th>結帳日期</th>
+                            <th>商品總價</th>
                             <th id='button_colum'></th>
                         </tr>
                     </thead>
                     <tbody id='itemArea'>
-                        {{foreach $product_list as $product_item}}
-                            {if $product_item['is_delete'] == 1 || $product_item['status'] == 0}
-                            <tr class="item-color-1">
-                                    <input type="hidden" value="{{$product_item['product_id']}}">
-                                    <td><img src="/shopping/img/{{$product_item['image']}}" alt=""></td>
-                                    <td>{{$product_item['name']}}</td>
-                                    <td>商品已下架</td>
-                                    <td>商品已下架</td>
-                                    <td>商品已下架</td>
-                                    <td>
-                                        <span class="pull-right delete_button">
-                                            <span class="btn btn-danger">
-                                                <span class="glyphicon glyphicon-remove">
-                                                </span>
-                                                從購物車移除
-                                            </span>
-                                        </span>
-                                    </td>
-                            
-                            {{else}}
                             <tr class="item-color-1">
                                 <input type="hidden" value="{{$product_item['product_id']}}">
                                 <td><img src="/shopping/img/{{$product_item['image']}}" alt=""></td>
-                                <td>{{$product_item['name']}}</td>
-                                <td>{{if $product_item['stock'] < 10}} {{$product_item['stock']}} {{else}} 庫存量 > 10 {{/if}}</td>
-                                <td>NT{{$product_item['price']}}</td>
-                                <td><input class='amount' type='number' min='1' value="{{$product_item['amount']}}" style="width:50px"></td>
+                                <td></td>
+                                <td>50</td>
+                                <td>2019-08-08</td>
+                                <td>NT1950</td>
                                 <td>
                                     <span class="pull-right delete_button">
-                                        <span class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove">
+                                        <span class="btn btn-info">
+                                            <span class="glyphicon glyphicon-eye-open">
                                             </span>
-                                            從購物車移除
+                                            詳細資訊
                                         </span>
                                     </span>
                                 </td>
                             </tr>
-                            {{/if}}
-                        {{/foreach}}
                     </tbody>
                 </table><!-- 會員顯示區結束 -->
-                <legend>結帳</legend>
-                <table class="table table-striped">
-                    <thead id='head2'>
-                        <!-- <th style="width:110px"></th>
-                        <th></th> -->
-                        <th>現有額度</th>
-                        <th>商品總價</th>
-                        <th>結帳後餘額</th>
-                        <th id='button_colum'></th>
-                    </thead>
-                    <tbody>
-                        <!-- <td></td>
-                        <td></td> -->
-                        <td>NT{{$user_item['cash']}}</td>
-                        <td id='total_price'>NT{{$total_price}}</td>
-                        <td id='user_final_cash'>
-                            {{if $user_final_cash >= 0}}
-                            {{$user_final_cash}}
-                            {{else}}
-                            {{$user_final_cash}}(餘額不足)
-                            {{/if}}
-                        </td>
-                        <td>
-                                <span class="pull-right" id="checkout_button">
-                                    <span class="btn btn-warning">
-                                        <span class="glyphicon glyphicon-usd">
-                                        </span>
-                                        結帳
-                                    </span>
-                                </span>
-                            </td>
-                    </tbody>
-                </table>
             </div>
         </div>
         <input type="hidden" id='message' value='{{$message}}'>

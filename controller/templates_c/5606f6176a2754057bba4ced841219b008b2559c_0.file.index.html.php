@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-06 16:42:44
+/* Smarty version 3.1.33, created on 2019-08-07 16:53:40
   from 'C:\xampp\htdocs\shopping\views\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d493d84bcfee2_75542581',
+  'unifunc' => 'content_5d4a91949bc941_59390825',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5606f6176a2754057bba4ced841219b008b2559c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\index.html',
-      1 => 1565080947,
+      1 => 1565168019,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d493d84bcfee2_75542581 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4a91949bc941_59390825 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,7 +136,29 @@ echo $_prefixVariable5;?>
                 <li>
                     <a href="/shopping/controller/usercontroller.php/shoppingcar">
                         <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
-                        <span class="badge badge-light">0</span>
+                        <span class="badge badge-light" id='product_count'>
+                            <?php ob_start();
+if (isset($_smarty_tpl->tpl_vars['order_detail_list_length']->value)) {
+$_prefixVariable6 = ob_get_clean();
+echo $_prefixVariable6;?>
+
+                            <?php ob_start();
+echo $_smarty_tpl->tpl_vars['order_detail_list_length']->value;
+$_prefixVariable7 = ob_get_clean();
+echo $_prefixVariable7;?>
+
+                            <?php ob_start();
+} else {
+$_prefixVariable8 = ob_get_clean();
+echo $_prefixVariable8;?>
+
+                            0
+                            <?php ob_start();
+}
+$_prefixVariable9 = ob_get_clean();
+echo $_prefixVariable9;?>
+
+                        </span>
                     </a>
                 </li>
                 <li class="dropdown">
@@ -159,46 +181,45 @@ echo $_prefixVariable5;?>
         <div class='row'>
             <div class="col-md-12" id='title'>
                 <h2>商品目錄</h2>
-                <p>The .table-bordered class adds borders to a table:</p>
             </div>
             <?php ob_start();
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['product_list']->value, 'product_item');
 if ($_from !== null) {
 foreach ($_from as $_smarty_tpl->tpl_vars['product_item']->value) {
-$_prefixVariable6 = ob_get_clean();
-echo $_prefixVariable6;?>
+$_prefixVariable10 = ob_get_clean();
+echo $_prefixVariable10;?>
 
             <div class=col-md-3 style='background-color: #262626'>
                 <div class=col-md-12 ><b class='item_title'><?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['name'];
-$_prefixVariable7 = ob_get_clean();
-echo $_prefixVariable7;?>
+$_prefixVariable11 = ob_get_clean();
+echo $_prefixVariable11;?>
 </b></div>
                 <img src="/shopping/img/<?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['image'];
-$_prefixVariable8 = ob_get_clean();
-echo $_prefixVariable8;?>
+$_prefixVariable12 = ob_get_clean();
+echo $_prefixVariable12;?>
 " alt="">
                 <div class=col-md-12 ><b class='item_price'>價格:NT<?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['price'];
-$_prefixVariable9 = ob_get_clean();
-echo $_prefixVariable9;?>
+$_prefixVariable13 = ob_get_clean();
+echo $_prefixVariable13;?>
 </b></div>
                 <div class=col-md-12 ><b class='item_created_date'>上架日期:<?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['updated_at'];
-$_prefixVariable10 = ob_get_clean();
-echo $_prefixVariable10;?>
+$_prefixVariable14 = ob_get_clean();
+echo $_prefixVariable14;?>
 </b></div>
                 <div class=col-md-12 ><b class='item_saled'>已售出:<?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['saled'];
-$_prefixVariable11 = ob_get_clean();
-echo $_prefixVariable11;?>
+$_prefixVariable15 = ob_get_clean();
+echo $_prefixVariable15;?>
 套</b></div>
                 <div class=col-md-12 >
                     <input type="hidden" value = <?php ob_start();
 echo $_smarty_tpl->tpl_vars['product_item']->value['product_id'];
-$_prefixVariable12 = ob_get_clean();
-echo $_prefixVariable12;?>
+$_prefixVariable16 = ob_get_clean();
+echo $_prefixVariable16;?>
 >
                     <span class='btn btn-warning'>
                         <span class="glyphicon glyphicon-eye-open"></span> 商品資訊
@@ -212,8 +233,8 @@ echo $_prefixVariable12;?>
 }
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable13 = ob_get_clean();
-echo $_prefixVariable13;?>
+$_prefixVariable17 = ob_get_clean();
+echo $_prefixVariable17;?>
 
         </div>
     </div>

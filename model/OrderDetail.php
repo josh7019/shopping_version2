@@ -6,6 +6,21 @@
         private $table = 'order_detail';
 
         /*
+         * 藉由order_menu_id取得清單中所有物品
+         */
+        public function getAllProduct($order_menu_id)
+        {
+            $order_detail_list = $this->selectAllWithWhere(
+                $this->table,
+                ['*'],
+                ['order_menu_id'],
+                [$order_menu_id],
+                'i'
+            );
+            return $order_detail_list;
+        }
+        
+        /*
          * 藉由order_menu_id取得清單中所有物品id
          */
         public function getAllProductId($order_menu_id)
@@ -87,6 +102,22 @@
                 $this->table,
                 ['amount'],
                 [$amount],
+                ['order_menu_id', 'product_id'],
+                [$order_menu_id, $product_id],
+                'iii'
+            );
+            return $is_success;
+        }
+
+        /*
+         * 修改購物車的一項產品結帳價格
+         */
+        public function updateDealPrice($deal_price, $order_menu_id, $product_id)
+        {
+            $is_success = $this->update(
+                $this->table,
+                ['deal_price'],
+                [$deal_price],
                 ['order_menu_id', 'product_id'],
                 [$order_menu_id, $product_id],
                 'iii'

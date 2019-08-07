@@ -20,7 +20,7 @@
     }
     
     /*
-     * 檢查token並回傳資料
+     * 檢查token
      */
     function checkToken()
     {
@@ -42,9 +42,10 @@
     /*
      * 檢查token並回傳資料
      */
-    function getToken()
+    function getUser()
     {
-        if (isset($_COOKIE['token'])) {
+        if(checkToken()){
+            if (isset($_COOKIE['token'])) {
             $token = $_COOKIE['token'];
             $user_model = new User;
             $user_item = $user_model->getUserByToken($token);
@@ -52,6 +53,8 @@
                 return $user_item;
             }
         }
+        }
+        
     }
 
 
@@ -95,18 +98,52 @@
     /*
      * 檢查並更新購物車
      */
-    function checkOrderMenuId($user_item)
+    function checkAndGetOrderMenuId($user_item)
     {
         $user = new User;
         $order_menu = new OrderMenu;
         $order_menu_item = $order_menu->getLastListByUserId($user_item['user_id']);
         if (isset($order_menu_item['user_id'])) {
-            $user->updateOrderMenuId($user_item['user_id'], $order_menu_item['order_menu_id']);
+            // $user->updateOrderMenuId($user_item['user_id'], $order_menu_item['order_menu_id']);
+            return $order_menu_item['order_menu_id'];
         } else {
             $is_success = $order_menu->addList($user_item['user_id']);
             if ($is_success) {
                 $order_menu_item = $order_menu->getLastListByUserId($user_item['user_id']);
-                $user->updateOrderMenuId($user_item['user_id'], $order_menu_item['order_menu_id']);
+                // $user->updateOrderMenuId($user_item['user_id'], $order_menu_item['order_menu_id']);
+                return $order_menu_item['order_menu_id'];
             }
+        }
+    }
+
+    /*
+     * 取得總價
+     */
+    function getTotalPrice($order_menu_id)
+    {
+        $total_price = 0;
+        $order_detail = new OrderDetail;
+        $order_detail_list = $order_detail->getAllProduct($order_menu_id);
+        $product = new Product;
+        foreach ($order_detail_list as $order_detail_item) {
+            $product_item = $product->getOneProductOnSale($order_detail_item['product_id']);
+            if (!isset($product_item['price'])) {continue;}
+            $total_price += $product_item['price'] * $order_detail_item['amount'];
+        }
+        return $total_price;
+    }
+    
+    /*
+     * 寫上結帳價格
+     */
+    function updateDealPrice($order_menu_id)
+    {
+        $order_detail = new OrderDetail;
+        $order_detail_list = $order_detail->getAllProduct($order_menu_id);
+        $product = new Product;
+        foreach ($order_detail_list as $order_detail_item) {
+            $product_item = $product->getOneProductOnSale($order_detail_item['product_id']);
+            if (!isset($product_item['price'])) {continue;}
+            $order_detail->updateDealPrice($product_item['price'], $order_menu_id, $order_detail_item['product_id']);
         }
     }

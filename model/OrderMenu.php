@@ -29,4 +29,20 @@
             );
             return $order_menu_item;
         }
+
+        /*
+         * 結帳
+         */
+        public function checkOut($order_menu_id)
+        {
+            $is_success = $this->update(
+                $this->table,
+                ['is_checkout'],
+                [1],
+                ['order_menu_id'],
+                [$order_menu_id],
+                'ii'
+            );
+            return $is_success;
+        }
     }

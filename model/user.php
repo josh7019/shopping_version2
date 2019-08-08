@@ -111,5 +111,20 @@
             );
             return $is_success;
         }
+
+        /*
+         * 結帳
+         */
+        public function getOneAccountByUserId($user_id)
+        {
+            $is_success = $this->selectSingleWithWhere(
+                $this->table,
+                ['account'],
+                ['user_id'],
+                [$user_id],
+                'i'
+            );
+            return $is_success;
+        }
     }
     

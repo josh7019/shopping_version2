@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-08 19:12:23
-  from 'C:\xampp\htdocs\shopping\views\shopping_history.html' */
+/* Smarty version 3.1.33, created on 2019-08-08 19:12:18
+  from 'C:\xampp\htdocs\shopping\views\manager_order_menu.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4c0397780cc5_65185568',
+  'unifunc' => 'content_5d4c0392cce038_22926235',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'fb04431a5b75d6446da170ea892001531835e36b' => 
+    '26f4810180f36381e34c0bf9235c5e045d277f3a' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\shopping\\views\\shopping_history.html',
-      1 => 1565262727,
+      0 => 'C:\\xampp\\htdocs\\shopping\\views\\manager_order_menu.html',
+      1 => 1565262676,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4c0397780cc5_65185568 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4c0392cce038_22926235 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -264,8 +264,8 @@ echo $_prefixVariable19;?>
                     <thead id = 'head1'>
                         <tr>
                             <th style="width:110px"></th>
-                            <th></th>
                             <th>訂單編號</th>
+                            <th>消費者帳戶</th>
                             <th>結帳日期</th>
                             <th>商品總價</th>
                             <th id='button_colum'></th>
@@ -281,28 +281,32 @@ echo $_prefixVariable20;?>
 
                         <tr class="item-color-1">
                                 <td></td>
-                                <td></td>
                                 <td><?php ob_start();
 echo $_smarty_tpl->tpl_vars['order_menu_item']->value['order_menu_id'];
 $_prefixVariable21 = ob_get_clean();
 echo $_prefixVariable21;?>
 </td>
                                 <td><?php ob_start();
-echo $_smarty_tpl->tpl_vars['order_menu_item']->value['updated_at'];
+echo $_smarty_tpl->tpl_vars['order_menu_item']->value['account'];
 $_prefixVariable22 = ob_get_clean();
 echo $_prefixVariable22;?>
 </td>
                                 <td><?php ob_start();
-echo $_smarty_tpl->tpl_vars['order_menu_item']->value['total_price'];
+echo $_smarty_tpl->tpl_vars['order_menu_item']->value['updated_at'];
 $_prefixVariable23 = ob_get_clean();
 echo $_prefixVariable23;?>
+</td>
+                                <td><?php ob_start();
+echo $_smarty_tpl->tpl_vars['order_menu_item']->value['total_price'];
+$_prefixVariable24 = ob_get_clean();
+echo $_prefixVariable24;?>
 </td>
                                 <td>
                                     <span class="pull-right delete_button">
                                         <a href="/shopping/controller/usercontroller.php/shoppingdetail/<?php ob_start();
 echo $_smarty_tpl->tpl_vars['order_menu_item']->value['order_menu_id'];
-$_prefixVariable24 = ob_get_clean();
-echo $_prefixVariable24;?>
+$_prefixVariable25 = ob_get_clean();
+echo $_prefixVariable25;?>
 ">
                                             <span class="btn btn-info">
                                                 <span class="glyphicon glyphicon-eye-open">
@@ -317,8 +321,8 @@ echo $_prefixVariable24;?>
 }
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
-$_prefixVariable25 = ob_get_clean();
-echo $_prefixVariable25;?>
+$_prefixVariable26 = ob_get_clean();
+echo $_prefixVariable26;?>
 
                     </tbody>
                 </table><!-- 會員顯示區結束 -->
@@ -326,8 +330,8 @@ echo $_prefixVariable25;?>
         </div>
         <input type="hidden" id='message' value='<?php ob_start();
 echo $_smarty_tpl->tpl_vars['message']->value;
-$_prefixVariable26 = ob_get_clean();
-echo $_prefixVariable26;?>
+$_prefixVariable27 = ob_get_clean();
+echo $_prefixVariable27;?>
 '>
         
         

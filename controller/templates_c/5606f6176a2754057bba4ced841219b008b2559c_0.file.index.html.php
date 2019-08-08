@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2019-08-08 12:29:20
+/* Smarty version 3.1.33, created on 2019-08-08 18:38:07
   from 'C:\xampp\htdocs\shopping\views\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_5d4ba5208f9907_02400922',
+  'unifunc' => 'content_5d4bfb8fac0459_79887143',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5606f6176a2754057bba4ced841219b008b2559c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\shopping\\views\\index.html',
-      1 => 1565238559,
+      1 => 1565260684,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5d4ba5208f9907_02400922 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5d4bfb8fac0459_79887143 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,7 +140,7 @@ echo $_prefixVariable7;?>
 
                     
                     <li>
-                        <a href="/shopping/controller/managercontroller.php/shoppinghistory">
+                        <a href="/shopping/controller/managercontroller.php/orderMenu">
                             <span class="glyphicon glyphicon-list-alt"></span> 訂單管理
                         </a>
                     </li>

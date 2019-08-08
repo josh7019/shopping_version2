@@ -74,4 +74,13 @@
             );
             return $order_menu_id_list;
         }
+
+        /*
+         * 取得所有訂單
+         */
+        public function getAllOrderMenu()
+        {
+            $order_menu_list = $this->selectAllWithWhere($this->table, ['*'], ['is_checkout'], [1], 'i');
+            return $order_menu_list;
+        }
     }

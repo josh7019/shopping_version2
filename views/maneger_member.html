@@ -48,10 +48,10 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     {{if !$is_login}}
-                    <li class=""><a href="/shopping/controller/userController.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/shopping/controller/userController.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
+                    <li class=""><a href="/shopping/controller/usercontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
                     {{else}}
-                    <li><a href="/shopping/controller/userController.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
                     {{/if}}
                     {{if $permission == 5}}
                     <li class=""><a href="/shopping/controller/managercontroller.php/member"><span class="glyphicon glyphicon-user"></span> 會員管理 <span class="sr-only">(current)</span></a></li>
@@ -80,9 +80,52 @@
                             </div>
                             <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
-                    <li><a href="/shopping/controller/userController.php/shoppinghistory"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
-                    <li><a href="/shopping/controller/userController.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
-                    <li class="dropdown"></li>
+                    {{if $is_login }}
+                        {{if $permission == 5}}
+                        
+                        <li>
+                            <a href="/shopping/controller/managercontroller.php/orderMenu">
+                                <span class="glyphicon glyphicon-list-alt"></span> 訂單管理
+                            </a>
+                        </li>
+                        {{else}}
+                            <li>
+                                <a href="/shopping/controller/usercontroller.php/shoppinghistory">
+                                    <span class="glyphicon glyphicon-list-alt"></span> 我的訂單
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/shopping/controller/usercontroller.php/shoppingcar">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
+                                    <span class="badge badge-light" id='product_count'>
+                                        {{if isset($order_detail_list_length)}}
+                                        {{$order_detail_list_length}}
+                                        {{else}}
+                                        0
+                                        {{/if}}
+                                    </span>
+                                </a>
+                            </li>
+                        {{/if}}
+                        {{else}}
+                            <li>
+                                <a href="/shopping/controller/usercontroller.php/shoppinghistory">
+                                    <span class="glyphicon glyphicon-list-alt"></span> 我的訂單
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/shopping/controller/usercontroller.php/shoppingcar">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> 購物車
+                                    <span class="badge badge-light" id='product_count'>
+                                        {{if isset($order_detail_list_length)}}
+                                        {{$order_detail_list_length}}
+                                        {{else}}
+                                        0
+                                        {{/if}}
+                                    </span>
+                                </a>
+                            </li>
+                    {{/if}}
                 </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->

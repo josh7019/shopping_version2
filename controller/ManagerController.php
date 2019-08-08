@@ -228,6 +228,31 @@
             echo json_encode($data);
         }
 
+        /*
+         * 訂單管理頁面
+         */
+        public function GET_orderMenu()
+        {
+            $is_login = (checkToken()) ? true : false;
+            $user_item = getUser();
+            $order_menu = new OrderMenu;
+            $order_menu_list = $order_menu->getAllOrderMenu();
+            $user = new User;
+            $order_detail = new OrderDetail;
+            foreach ($order_menu_list as $index => $order_menu_item) {
+                $order_menu_list[$index]['total_price'] = $order_detail->getOneMenuIdTotalPrice(
+                    $order_menu_item['order_menu_id']
+                );
+                $user_account = $user->getOneAccountByUserId($order_menu_item['user_id']);
+                $order_menu_list[$index]['account'] = $user_account['account'];
+            }
+
+            $smarty = new Smarty;
+            $smarty->assign('order_menu_list', $order_menu_list);
+            $smarty->assign('permission', $user_item['permission']);
+            $smarty->assign('is_login', $is_login);
+            $smarty->display('../views/manager_order_menu.html');
+        }
     }
     
     $url_list = explode('/',$_SERVER['REQUEST_URI']);

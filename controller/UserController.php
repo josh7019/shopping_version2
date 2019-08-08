@@ -201,9 +201,9 @@
             }
             
             
-
+            // var_dump($user_item);
             $smarty = new Smarty;
-
+            $smarty->assign('permission', $user_item['permission']);
             $smarty->assign('user_item', $user_item);
             $smarty->assign('product_list', $product_list);
             $smarty->assign('total_price', $total_price);

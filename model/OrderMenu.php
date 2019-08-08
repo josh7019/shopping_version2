@@ -31,18 +31,47 @@
         }
 
         /*
+         * 藉由order_menu_id取得一筆訂單(訂單紀錄)
+         */
+        public function getOneBYOrderMenuId($order_menu_id)
+        {
+            $order_menu_item = $this->selectSingleWithWhere(
+                $this->table,
+                ['*'],
+                ['order_menu_id'],
+                [$order_menu_id],
+                'i'
+            );
+        }
+
+        /*
          * 結帳
          */
         public function checkOut($order_menu_id)
         {
             $is_success = $this->update(
                 $this->table,
-                ['is_checkout'],
-                [1],
+                ['is_checkout', 'updated_at'],
+                [1, date("Y/m/d H:i:s")],
                 ['order_menu_id'],
                 [$order_menu_id],
-                'ii'
+                'isi'
             );
             return $is_success;
+        }
+
+        /*
+         * 取得單一使用者所有訂單編號
+         */
+        public function getOneUserAllMenuId($user_id)
+        {
+            $order_menu_id_list = $this->selectAllWithWhere(
+                $this->table,
+                ['order_menu_id', 'updated_at'],
+                ['user_id', 'is_checkout'],
+                [$user_id, 1],
+                'ii'
+            );
+            return $order_menu_id_list;
         }
     }

@@ -68,7 +68,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    {{if $is_login}}
+                    {{if !$is_login}}
                     <li class=""><a href="/shopping/controller/usercontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
                     <li><a href="/shopping/controller/usercontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
                     {{else}}
@@ -95,7 +95,7 @@
                         </div>
                         <button type="button" class="btn btn-default">搜尋商品</button>
                     </form>
-                    <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
+                    <li><a href="/shopping/controller/usercontroller.php/shoppinghistory"><span class="glyphicon glyphicon-list-alt"></span> 我的訂單</a></li>
                     <li><a href="/shopping/controller/usercontroller.php/shoppingcar"><span class="glyphicon glyphicon-shopping-cart"></span> 購物車</a></li>
                     <li class="dropdown"></li>
                 </ul>
@@ -121,15 +121,34 @@
                         </tr>
                     </thead>
                     <tbody id='itemArea'>
-                        {{foreach $product_list as $product_item}}
-                            {if $product_item['is_delete'] == 1 || $product_item['status'] == 0}
-                            <tr class="item-color-1">
+                        {{if $product_list != 0}}
+                            {{foreach $product_list as $product_item}}
+                                {if $product_item['is_delete'] == 1 || $product_item['status'] == 0}
+                                <tr class="item-color-1">
+                                        <input type="hidden" value="{{$product_item['product_id']}}">
+                                        <td><img src="/shopping/img/{{$product_item['image']}}" alt=""></td>
+                                        <td>{{$product_item['name']}}</td>
+                                        <td>商品已下架</td>
+                                        <td>商品已下架</td>
+                                        <td>商品已下架</td>
+                                        <td>
+                                            <span class="pull-right delete_button">
+                                                <span class="btn btn-danger">
+                                                    <span class="glyphicon glyphicon-remove">
+                                                    </span>
+                                                    從購物車移除
+                                                </span>
+                                            </span>
+                                        </td>
+                                
+                                {{else}}
+                                <tr class="item-color-1">
                                     <input type="hidden" value="{{$product_item['product_id']}}">
                                     <td><img src="/shopping/img/{{$product_item['image']}}" alt=""></td>
                                     <td>{{$product_item['name']}}</td>
-                                    <td>商品已下架</td>
-                                    <td>商品已下架</td>
-                                    <td>商品已下架</td>
+                                    <td>{{if $product_item['stock'] < 10}} {{$product_item['stock']}} {{else}} 庫存量 > 10 {{/if}}</td>
+                                    <td>NT{{$product_item['price']}}</td>
+                                    <td><input class='amount' type='number' min='1' value="{{$product_item['amount']}}" style="width:50px"></td>
                                     <td>
                                         <span class="pull-right delete_button">
                                             <span class="btn btn-danger">
@@ -139,27 +158,10 @@
                                             </span>
                                         </span>
                                     </td>
-                            
-                            {{else}}
-                            <tr class="item-color-1">
-                                <input type="hidden" value="{{$product_item['product_id']}}">
-                                <td><img src="/shopping/img/{{$product_item['image']}}" alt=""></td>
-                                <td>{{$product_item['name']}}</td>
-                                <td>{{if $product_item['stock'] < 10}} {{$product_item['stock']}} {{else}} 庫存量 > 10 {{/if}}</td>
-                                <td>NT{{$product_item['price']}}</td>
-                                <td><input class='amount' type='number' min='1' value="{{$product_item['amount']}}" style="width:50px"></td>
-                                <td>
-                                    <span class="pull-right delete_button">
-                                        <span class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-remove">
-                                            </span>
-                                            從購物車移除
-                                        </span>
-                                    </span>
-                                </td>
-                            </tr>
-                            {{/if}}
-                        {{/foreach}}
+                                </tr>
+                                {{/if}}
+                            {{/foreach}}
+                        {{/if}}
                     </tbody>
                 </table><!-- 會員顯示區結束 -->
                 <legend>結帳</legend>

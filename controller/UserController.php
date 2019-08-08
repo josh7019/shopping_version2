@@ -20,13 +20,13 @@
         
         public function GET_index()
         {
-            $is_login = (checkToken()) ? false : true;
+            $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             
             $product = new Product;
             $product_list = $product->getAllProductOnSale();
             $smarty = new Smarty;
-            if (!$is_login) {
+            if ($is_login) {
                 $order_menu_id = checkAndGetOrderMenuId($user_item);
                 $order_detail = new OrderDetail;
                 $order_detail_list = $order_detail->getAllProductId($order_menu_id);
@@ -174,25 +174,33 @@
          */
         public function GET_shoppingCar()
         {
-            $is_login = (checkToken()) ? false : true;
+            $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
-            $order_menu_id = checkAndGetOrderMenuId($user_item);
-            $order_detail = new OrderDetail;
-            $product_id_list = $order_detail->getAllProductId($order_menu_id);
-            $product_list = [];
-            $product = new Product;
-            foreach($product_id_list as $product_id) {
-                $product_item = $product->getOneProductOnSale($product_id["product_id"]);
-                if (!isset($product_item["product_id"])) {
-                    $order_detail->deleteOne($order_menu_id,$product_id["product_id"]);
-                    continue;
+            if ($is_login) {
+                $order_menu_id = checkAndGetOrderMenuId($user_item);
+                $order_detail = new OrderDetail;
+                $product_id_list = $order_detail->getAllProductId($order_menu_id);
+                $product_list = [];
+                $product = new Product;
+                foreach($product_id_list as $product_id) {
+                    $product_item = $product->getOneProductOnSale($product_id["product_id"]);
+                    if (!isset($product_item["product_id"])) {
+                        $order_detail->deleteOne($order_menu_id,$product_id["product_id"]);
+                        continue;
+                    }
+                    $order_detail_item = $order_detail->getOne(checkAndGetOrderMenuId($user_item), $product_id["product_id"]);
+                    $product_item['amount'] = $order_detail_item['amount'];
+                    $product_list[] = $product_item;
                 }
-                $order_detail_item = $order_detail->getOne(checkAndGetOrderMenuId($user_item), $product_id["product_id"]);
-                $product_item['amount'] = $order_detail_item['amount'];
-                $product_list[] = $product_item;
+                $total_price = getTotalPrice($order_menu_id,$order_menu_id);
+                $user_final_cash = $user_item['cash'] - $total_price;
+            } else {
+                $total_price = 0;
+                $user_final_cash = 0;
+                $product_list = 0;
             }
-            $total_price = getTotalPrice($order_menu_id,$order_menu_id);
-            $user_final_cash = $user_item['cash'] - $total_price;
+            
+            
 
             $smarty = new Smarty;
 
@@ -362,6 +370,7 @@
             $order_menu = new OrderMenu;
             $user = new User;
             $is_success_user = $user->checkOut($final_price, $user_item['user_id']);
+            ## 判斷使用者結帳流程是否成功
             if (!$is_success_user) {
                 $data = [
                     'alert' => '結帳失敗',
@@ -369,16 +378,14 @@
                 ];
                 echo json_encode($data);
                 exit();
-            }
-            $is_success_order = $order_menu->checkOut(checkAndGetOrderMenuId($user_item));
-            
-            if ($is_success_order) {
+            } elseif ($is_success_user) {
                 updateDealPrice(checkAndGetOrderMenuId($user_item));
                 $data = [
                     'alert' => '購買成功,感謝您的光臨',
                     'is_success' => false,
                     'location' => '/shopping/controller/usercontroller.php/index'
                 ];
+                $is_success_order = $order_menu->checkOut(checkAndGetOrderMenuId($user_item));
                 checkAndGetOrderMenuId($user_item);
                 echo json_encode($data);
                 exit();
@@ -397,7 +404,45 @@
          */
         public function GET_shoppingHistory()
         {
+            $is_login = (checkToken()) ? true : false;
+            $user_item = getUser();
+            $order_menu = new OrderMenu;
+            $order_menu_list = $order_menu->getOneUserAllMenuId($user_item['user_id']);
+            $order_detail = new OrderDetail;
+            foreach ($order_menu_list as $index => $order_menu_item) {
+                $order_menu_list[$index]['total_price'] = $order_detail->getOneMenuIdTotalPrice(
+                    $order_menu_item['order_menu_id']
+                );
+            }
+            $smarty = new Smarty;
+            $smarty->assign('order_menu_list', $order_menu_list);
+            $smarty->assign('permission', $user_item['permission']);
+            $smarty->assign('is_login', $is_login);
+            $smarty->display('../views/shopping_history.html');
+        }
 
+        /*
+         * 訂單詳細資料頁面
+         */
+        public function GET_shoppingDetail()
+        {
+            $is_login = (checkToken()) ? true : false;
+            $user_item = getUser();
+            $order_menu_id = $this->id;
+            $order_detail = new OrderDetail;
+            $order_detail_list = $order_detail->getAllProduct($order_menu_id);
+            $product = new Product;
+            foreach ($order_detail_list as $index => $order_detail_item) {
+                $product_item = $product->getOneProductWithoutDelete($order_detail_item['product_id']);
+                $order_detail_list[$index]['image'] = $product_item['image'];
+                $order_detail_list[$index]['name'] = $product_item['name'];
+            }
+            // var_dump($order_detail_list);
+            $smarty = new Smarty;
+            $smarty->assign('order_detail_list', $order_detail_list);
+            $smarty->assign('permission', $user_item['permission']);
+            $smarty->assign('is_login', $is_login);
+            $smarty->display('../views/shopping_detail.html');
         }
     }
 

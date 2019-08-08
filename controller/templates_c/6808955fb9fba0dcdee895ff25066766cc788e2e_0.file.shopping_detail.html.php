@@ -1,12 +1,42 @@
-<!DOCTYPE html>
+<?php
+/* Smarty version 3.1.33, created on 2019-08-08 12:07:21
+  from 'C:\xampp\htdocs\shopping\views\shopping_detail.html' */
+
+/* @var Smarty_Internal_Template $_smarty_tpl */
+if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
+  'version' => '3.1.33',
+  'unifunc' => 'content_5d4b9ff9c246a6_86351159',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '6808955fb9fba0dcdee895ff25066766cc788e2e' => 
+    array (
+      0 => 'C:\\xampp\\htdocs\\shopping\\views\\shopping_detail.html',
+      1 => 1565237240,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+  ),
+),false)) {
+function content_5d4b9ff9c246a6_86351159 (Smarty_Internal_Template $_smarty_tpl) {
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/shopping/scripts/functions.js"></script>
+    <?php echo '<script'; ?>
+ src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="/shopping/scripts/functions.js"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src=""><?php echo '</script'; ?>
+>
     <title>Document</title>
     <style>
         #head1 {
@@ -67,12 +97,24 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    {{if !$is_login}}
+                    <?php ob_start();
+if (!$_smarty_tpl->tpl_vars['is_login']->value) {
+$_prefixVariable1 = ob_get_clean();
+echo $_prefixVariable1;?>
+
                     <li class=""><a href="/shopping/controller/usercontroller.php/login"><span class="glyphicon glyphicon-user"></span> 登入 <span class="sr-only">(current)</span></a></li>
                     <li><a href="/shopping/controller/usercontroller.php/signup"><span class="glyphicon glyphicon-tower"></span> 註冊</a></li>
-                    {{else}}
+                    <?php ob_start();
+} else {
+$_prefixVariable2 = ob_get_clean();
+echo $_prefixVariable2;?>
+
                     <li><a href="/shopping/controller/usercontroller.php/logout"><span class="glyphicon glyphicon-tower"></span> 登出</a></li>
-                    {{/if}}
+                    <?php ob_start();
+}
+$_prefixVariable3 = ob_get_clean();
+echo $_prefixVariable3;?>
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -106,52 +148,80 @@
         <div class='container'>
             <div id="nowTime"></div>
             <div>
-                    <legend style = "color: red">購物紀錄</legend>
-                <!-- 會員顯示區 -->
+                    <legend style = "color: red">訂單詳細資訊</legend>
+                <!-- 顯示區 -->
                 <table class="table table-striped" id='title'>
                     <thead id = 'head1'>
                         <tr>
-                            <th style="width:110px"></th>
+                            <th style="width:110px">商品圖片</th>
+                            <th>商品名稱</th>
+                            <th>商品單價</th>
+                            <th>購買數量</th>
                             <th></th>
-                            <th>訂單編號</th>
-                            <th>結帳日期</th>
-                            <th>商品總價</th>
                             <th id='button_colum'></th>
                         </tr>
                     </thead>
                     <tbody id='itemArea'>
-                        {{foreach $order_menu_list as $order_menu_item}}
-                        <tr class="item-color-1">
+                        <?php ob_start();
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['order_detail_list']->value, 'order_detail_item');
+if ($_from !== null) {
+foreach ($_from as $_smarty_tpl->tpl_vars['order_detail_item']->value) {
+$_prefixVariable4 = ob_get_clean();
+echo $_prefixVariable4;?>
+
+                            <tr class="item-color-1">
+                                <td><img src="/shopping/img/<?php ob_start();
+echo $_smarty_tpl->tpl_vars['order_detail_item']->value['image'];
+$_prefixVariable5 = ob_get_clean();
+echo $_prefixVariable5;?>
+" alt=""></td>
+                                <td><?php ob_start();
+echo $_smarty_tpl->tpl_vars['order_detail_item']->value['name'];
+$_prefixVariable6 = ob_get_clean();
+echo $_prefixVariable6;?>
+</td>
+                                <td><?php ob_start();
+echo $_smarty_tpl->tpl_vars['order_detail_item']->value['deal_price'];
+$_prefixVariable7 = ob_get_clean();
+echo $_prefixVariable7;?>
+</td>
+                                <td><?php ob_start();
+echo $_smarty_tpl->tpl_vars['order_detail_item']->value['amount'];
+$_prefixVariable8 = ob_get_clean();
+echo $_prefixVariable8;?>
+</td>
                                 <td></td>
-                                <td></td>
-                                <td>{{$order_menu_item['order_menu_id']}}</td>
-                                <td>{{$order_menu_item['updated_at']}}</td>
-                                <td>{{$order_menu_item['total_price']}}</td>
                                 <td>
-                                    <span class="pull-right delete_button">
-                                        <a href="/shopping/controller/usercontroller.php/shoppingdetail/{{$order_menu_item['order_menu_id']}}">
-                                            <span class="btn btn-info">
-                                                <span class="glyphicon glyphicon-eye-open">
-                                                </span>
-                                                詳細資訊
-                                            </span>
-                                        </a>
-                                    </span>
                                 </td>
                             </tr>
-                        {{/foreach}}
+                        <?php ob_start();
+}
+}
+$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
+$_prefixVariable9 = ob_get_clean();
+echo $_prefixVariable9;?>
+
                     </tbody>
-                </table><!-- 會員顯示區結束 -->
+                </table><!-- 顯示區結束 -->
             </div>
         </div>
-        <input type="hidden" id='message' value='{{$message}}'>
+        <input type="hidden" id='message' value='<?php ob_start();
+echo $_smarty_tpl->tpl_vars['message']->value;
+$_prefixVariable10 = ob_get_clean();
+echo $_prefixVariable10;?>
+'>
         
         
-        <script type="text/javascript" src=''></script>
-        <script 
+        <?php echo '<script'; ?>
+ type="text/javascript" src=''><?php echo '</script'; ?>
+>
+        <?php echo '<script'; ?>
+ 
         src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" 
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" 
         crossorigin="anonymous">
-        </script>
+        <?php echo '</script'; ?>
+>
 </body>
-</html>
+</html><?php }
+}

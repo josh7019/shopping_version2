@@ -64,7 +64,7 @@
          */
         public function GET_product()
         {
-            $is_login = (checkToken()) ? false : true;
+            $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $product = new Product;
             $product_list = $product->getAllProduct();
@@ -140,7 +140,7 @@
          */
         public function GET_addProduct()
         {
-            $is_login = (checkToken()) ? false : true;
+            $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $smarty = new Smarty;
             $smarty->assign('permission', $user_item['permission']);
@@ -175,7 +175,7 @@
          */
         public function GET_editProduct()
         {
-            $is_login = (checkToken()) ? false : true;
+            $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $product = new Product();
             $product_item = $product->getOneProduct($this->id);
@@ -191,7 +191,7 @@
          */
         public function GET_member()
         {
-            $is_login = (checkToken()) ? false : true;
+            $is_login = (checkToken()) ? true : false;
             $user_item = getUser();
             $user = new User;
             $user_list = $user->getAllUser();

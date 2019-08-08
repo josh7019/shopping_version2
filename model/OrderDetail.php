@@ -124,4 +124,19 @@
             );
             return $is_success;
         }
+
+        /*
+         * 取得同一訂單結帳後總金額
+         */
+        public function getOneMenuIdTotalPrice($order_menu_id)
+        {
+            $total_price = $this->selectSingleWithWhere(
+                $this->table,
+                ['sum(deal_price*amount) as total_price'],
+                ['order_menu_id'],
+                [$order_menu_id],
+                'i'
+            );
+            return $total_price['total_price'];
+        }
     }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/shopping/scripts/functions.js"></script>
+    <script src=""></script>
     <title>Document</title>
     <style>
         #head1 {
@@ -106,42 +107,33 @@
         <div class='container'>
             <div id="nowTime"></div>
             <div>
-                    <legend style = "color: red">購物紀錄</legend>
-                <!-- 會員顯示區 -->
+                    <legend style = "color: red">訂單詳細資訊</legend>
+                <!-- 顯示區 -->
                 <table class="table table-striped" id='title'>
                     <thead id = 'head1'>
                         <tr>
-                            <th style="width:110px"></th>
+                            <th style="width:110px">商品圖片</th>
+                            <th>商品名稱</th>
+                            <th>商品單價</th>
+                            <th>購買數量</th>
                             <th></th>
-                            <th>訂單編號</th>
-                            <th>結帳日期</th>
-                            <th>商品總價</th>
                             <th id='button_colum'></th>
                         </tr>
                     </thead>
                     <tbody id='itemArea'>
-                        {{foreach $order_menu_list as $order_menu_item}}
-                        <tr class="item-color-1">
+                        {{foreach $order_detail_list as $order_detail_item}}
+                            <tr class="item-color-1">
+                                <td><img src="/shopping/img/{{$order_detail_item['image']}}" alt=""></td>
+                                <td>{{$order_detail_item['name']}}</td>
+                                <td>{{$order_detail_item['deal_price']}}</td>
+                                <td>{{$order_detail_item['amount']}}</td>
                                 <td></td>
-                                <td></td>
-                                <td>{{$order_menu_item['order_menu_id']}}</td>
-                                <td>{{$order_menu_item['updated_at']}}</td>
-                                <td>{{$order_menu_item['total_price']}}</td>
                                 <td>
-                                    <span class="pull-right delete_button">
-                                        <a href="/shopping/controller/usercontroller.php/shoppingdetail/{{$order_menu_item['order_menu_id']}}">
-                                            <span class="btn btn-info">
-                                                <span class="glyphicon glyphicon-eye-open">
-                                                </span>
-                                                詳細資訊
-                                            </span>
-                                        </a>
-                                    </span>
                                 </td>
                             </tr>
                         {{/foreach}}
                     </tbody>
-                </table><!-- 會員顯示區結束 -->
+                </table><!-- 顯示區結束 -->
             </div>
         </div>
         <input type="hidden" id='message' value='{{$message}}'>

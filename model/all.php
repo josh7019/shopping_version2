@@ -1,10 +1,10 @@
 <?php
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/User.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/manager.php');
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/tools/CheckTool.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/Product.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/OrderDetail.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/model/OrderMenu.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/shopping/tools/CheckTool.php');
     
     /*
      * 產生token
